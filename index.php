@@ -133,19 +133,21 @@ class="font-sans text-lg text-white bg-slate-900 select-none
                         <h2 class="text-white text-center bg-sky-900/90">POMODORO CONFIG</h2>
                         <div class="flex">
                             <div class="flex-[3] flex flex-col justify-around bg-sky-400" >
-                                <fieldset class="p-2 text-xl">
+                                <fieldset id="startBreakBell"
+                                class="p-2 text-xl">
                                     <legend class="text-2xl mb-4" >Start Break</legend>
-                                    <input  type="checkbox" selected/><span class="mr-4"> Song 1</span>
-                                    <input type="checkbox"/><span class="mr-4"> Song 2</span>
-                                    <input type="checkbox"/><span class="mr-4"> Song 3</span>
-                                    <input type="checkbox"/><span class="mr-4"> Song 4</span>
+                                    <input value="1" type="checkbox"/><span class="mr-4"> Song 1</span>
+                                    <input value="2" type="checkbox"/><span class="mr-4"> Song 2</span>
+                                    <input value="3" type="checkbox"/><span class="mr-4"> Song 3</span>
+                                    <input value="4" type="checkbox"/><span class="mr-4"> Song 4</span>
                                 </fieldset>
-                                <fieldset class="p-2 text-xl">
+                                <fieldset  id="stopBreakBell"
+                                class="p-2 text-xl">
                                     <legend class="text-2xl mb-4" >Stop Break</legend>
-                                    <input  type="checkbox" active/><span class="mr-4"> Song 1</span>
-                                    <input type="checkbox"/><span class="mr-4"> Song 2</span>
-                                    <input type="checkbox"/><span class="mr-4"> Song 3</span>
-                                    <input type="checkbox"/><span class="mr-4"> Song 4</span>
+                                    <input value="1" type="checkbox"/><span class="mr-4"> Song 1</span>
+                                    <input value="2" type="checkbox"/><span class="mr-4"> Song 2</span>
+                                    <input value="3" type="checkbox"/><span class="mr-4"> Song 3</span>
+                                    <input value="4" type="checkbox"/><span class="mr-4"> Song 4</span>
                                 </fieldset>
                             </div>
                             <div class="flex-1 flex flex-col p-4 bg-sky-500">
@@ -153,61 +155,61 @@ class="font-sans text-lg text-white bg-slate-900 select-none
                                 <div class="p-2" >   
                                     <label >Pomodoro Length</label><br/>
                                     <select name="pomodoro" id="setPomodoroLength" class="p-1 border border-gray-900 rounded">
-                                        <option value="05" id="">05</option>
-                                        <option value="10" id="">10</option>
-                                        <option value="15" id="">15</option>
-                                        <option value="20" id="">20</option>
-                                        <option value="25" id="" selected>25</option>
-                                        <option value="30" id="">30</option>
-                                        <option value="35" id="">35</option>
-                                        <option value="40" id="">40</option>
-                                        <option value="45" id="">45</option>
-                                        <option value="50" id="">50</option>
-                                        <option value="55" id="">55</option>
+                                        <option value="5">5</option>
+                                        <option value="10">10</option>
+                                        <option value="15">15</option>
+                                        <option value="20">20</option>
+                                        <option value="25">25</option>
+                                        <option value="30">30</option>
+                                        <option value="35">35</option>
+                                        <option value="40">40</option>
+                                        <option value="45">45</option>
+                                        <option value="50">50</option>
+                                        <option value="55">55</option>
                                     </select>
                                 </div>
                                 <div class="p-2" >   
                                     <label>Short Break</label><br/>
                                     <select name="pomodoro" id="setPomodoroShortBreak" class="p-1 border border-gray-900 rounded">
-                                        <option value="05" id="" selected>05</option>
-                                        <option value="10" id="">10</option>
-                                        <option value="15" id="">15</option>
-                                        <option value="20" id="">20</option>
-                                        <option value="25" id="">25</option>
-                                        <option value="30" id="">30</option>
-                                        <option value="35" id="">35</option>
-                                        <option value="40" id="">40</option>
-                                        <option value="45" id="">45</option>
-                                        <option value="50" id="">50</option>
-                                        <option value="55" id="">55</option>
+                                        <option value="5">5</option>
+                                        <option value="10">10</option>
+                                        <option value="15">15</option>
+                                        <option value="20">20</option>
+                                        <option value="25">25</option>
+                                        <option value="30">30</option>
+                                        <option value="35">35</option>
+                                        <option value="40">40</option>
+                                        <option value="45">45</option>
+                                        <option value="50">50</option>
+                                        <option value="55">55</option>
                                     </select>
                                 </div>
                                 <div class="p-2" >   
                                     <label>Long Break</label><br/>
                                     <select name="pomodoro" id="setPomodoroLongBreak" class="p-1 border border-gray-900 rounded">
-                                        <option value="05" id="">05</option>
-                                        <option value="10" id="">10</option>
-                                        <option value="15" id=""selected>15</option>
-                                        <option value="20" id="">20</option>
-                                        <option value="25" id="">25</option>
-                                        <option value="30" id="">30</option>
-                                        <option value="35" id="">35</option>
-                                        <option value="40" id="">40</option>
-                                        <option value="45" id="">45</option>
-                                        <option value="50" id="">50</option>
-                                        <option value="55" id="">55</option>
+                                        <option value="5">5</option>
+                                        <option value="10">10</option>
+                                        <option value="15">15</option>
+                                        <option value="20">20</option>
+                                        <option value="25">25</option>
+                                        <option value="30">30</option>
+                                        <option value="35">35</option>
+                                        <option value="40">40</option>
+                                        <option value="45">45</option>
+                                        <option value="50">50</option>
+                                        <option value="55">55</option>
                                     </select>
                                 </div>
                                 <div class="p-2" >   
                                     <label>Long Break After</label><br/>
                                     <select name="pomodoro" id="setPomodorolongAfter" class="p-1 border border-gray-900 rounded">
-                                        <option value="02" id="">02</option>
-                                        <option value="03" id="">03</option>
-                                        <option value="04" id=""selected>04</option>
-                                        <option value="05" id="">05</option>
-                                        <option value="06" id="">06</option>
-                                        <option value="07" id="">07</option>
-                                        <option value="08" id="">08</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
                                     </select>
                                 </div>
                                 <button id="handleSavePomodoroConfig"
