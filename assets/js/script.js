@@ -19,11 +19,12 @@ class Pomodoro {
 }
 
 let user = new User(localStorage.username, localStorage.location);
+
 let pomodoro = new Pomodoro(localStorage.time, 
                             localStorage.shortBreak, 
                             localStorage.longBreak, 
                             localStorage.longBreakAfter, 
-                            localStorage.ShortBell, 
+                            localStorage.shortBell, 
                             localStorage.longBell
 );
 
@@ -200,47 +201,72 @@ function openPomodoroConfigArea() {
     c('#pomodoroConfigurationArea').style.display = 'block';
     c('#pomodoroConfigurationArea').style.opacity = '1';
 
-    setSelected( cs('#setPomodoroLength option'), pomodoro.time );
-    setSelected( cs('#setPomodoroShortBreak option'), pomodoro.shortBreak );
-    setSelected( cs('#setPomodoroLongBreak option'), pomodoro.longBreak );
-    setSelected( cs('#setPomodorolongAfter option'), pomodoro.longBreakAfter );
-    setChecked( cs('#startBreakBell input'), pomodoro.shortBell );
-    setChecked( cs('#stopBreakBell input'), pomodoro.longBell );
+    setCurrentSelected( cs('#setPomodoroLength option'), pomodoro.time );
+    setCurrentSelected( cs('#setPomodoroShortBreak option'), pomodoro.shortBreak );
+    setCurrentSelected( cs('#setPomodoroLongBreak option'), pomodoro.longBreak );
+    setCurrentSelected( cs('#setPomodorolongAfter option'), pomodoro.longBreakAfter );
 
+    setCurrtentChecked( cs('#startBreakBell input'), pomodoro.shortBell );
+    setCurrtentChecked( cs('#stopBreakBell input'), pomodoro.longBell );
 
-
-
-    function checkboxSelected() {
-
-    }
-
-
-    function setSelected(arr, value) {
+    function setCurrentSelected(arr, value) {
         arr.forEach( item => {
             let key = item.getAttribute('value');
             if(key == value) {
-                item.setAttribute('selected', 'selected');
+                item.selected = true;
             }
         })
     }
-    function setChecked(arr, value) {
+    function setCurrtentChecked(arr, value) {
         arr.forEach( item => {
             let key = item.getAttribute('value');
             if(key == value) {
-                item.setAttribute('checked', 'checked');
+                item.checked = true;
             }
         })
     }
 }
+function checkboxSelected(e, classItem) {
+    cs(classItem).forEach( item => {
+        if(item.checked) {
+            item.checked = false;
+        }
+    })
+    e.target.checked = true;
+}
+
+
+
+
 function closePomodoroConfigArea() {
     c('#pomodoroConfigurationArea').style.opacity = '0';
     c('#pomodoroConfigurationArea').style.display = 'none';
 }
 
 function handleSavePomodoroConfig() {
+    cs('#startBreakBell input').forEach(item => handleSaveCheckedInputs(item, 'shortBell'));
+    cs('#stopBreakBell input').forEach(item => handleSaveCheckedInputs(item, 'longBell'));
+
+    cs('#setPomodoroLength option').forEach(item => handleSaveSelectedOption(item, 'time'))
+    cs('#setPomodoroShortBreak option').forEach(item => handleSaveSelectedOption(item, 'shortBreak'))
+    cs('#setPomodoroLongBreak option').forEach(item => handleSaveSelectedOption(item, 'longBreak'))
+    cs('#setPomodorolongAfter option').forEach(item => handleSaveSelectedOption(item, 'longBreakAfter'))
+
+    function handleSaveCheckedInputs(item, storage) {
+        if(item.checked) {
+            localStorage.setItem(storage, parseInt(item.value));
+        }
+    }
+    function handleSaveSelectedOption(item, storage) {
+        if(item.selected) {
+            localStorage.setItem(storage, parseInt(item.value));
+        }
+    }
 
     c('#pomodoroConfigurationArea').style.opacity = '0';
     c('#pomodoroConfigurationArea').style.display = 'none';
+    
+    window.location.reload(true);
 
 
 }

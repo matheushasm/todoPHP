@@ -136,18 +136,18 @@ class="font-sans text-lg text-white bg-slate-900 select-none
                                 <fieldset id="startBreakBell"
                                 class="p-2 text-xl">
                                     <legend class="text-2xl mb-4" >Start Break</legend>
-                                    <input value="1" type="checkbox"/><span class="mr-4"> Song 1</span>
-                                    <input value="2" type="checkbox"/><span class="mr-4"> Song 2</span>
-                                    <input value="3" type="checkbox"/><span class="mr-4"> Song 3</span>
-                                    <input value="4" type="checkbox"/><span class="mr-4"> Song 4</span>
+                                    <input value="1" type="checkbox" onclick="checkboxSelected(event, '#startBreakBell input')"/><span class="mr-4"> Song 1</span>
+                                    <input value="2" type="checkbox" onclick="checkboxSelected(event, '#startBreakBell input')"/><span class="mr-4"> Song 2</span>
+                                    <input value="3" type="checkbox" onclick="checkboxSelected(event, '#startBreakBell input')"/><span class="mr-4"> Song 3</span>
+                                    <input value="4" type="checkbox" onclick="checkboxSelected(event, '#startBreakBell input')"/><span class="mr-4"> Song 4</span>
                                 </fieldset>
                                 <fieldset  id="stopBreakBell"
                                 class="p-2 text-xl">
                                     <legend class="text-2xl mb-4" >Stop Break</legend>
-                                    <input value="1" type="checkbox"/><span class="mr-4"> Song 1</span>
-                                    <input value="2" type="checkbox"/><span class="mr-4"> Song 2</span>
-                                    <input value="3" type="checkbox"/><span class="mr-4"> Song 3</span>
-                                    <input value="4" type="checkbox"/><span class="mr-4"> Song 4</span>
+                                    <input value="1" type="checkbox" onclick="checkboxSelected(event, '#stopBreakBell input')"/><span class="mr-4"> Song 1</span>
+                                    <input value="2" type="checkbox" onclick="checkboxSelected(event, '#stopBreakBell input')"/><span class="mr-4"> Song 2</span>
+                                    <input value="3" type="checkbox" onclick="checkboxSelected(event, '#stopBreakBell input')"/><span class="mr-4"> Song 3</span>
+                                    <input value="4" type="checkbox" onclick="checkboxSelected(event, '#stopBreakBell input')"/><span class="mr-4"> Song 4</span>
                                 </fieldset>
                             </div>
                             <div class="flex-1 flex flex-col p-4 bg-sky-500">
