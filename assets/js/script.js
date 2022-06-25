@@ -202,15 +202,15 @@ if(user.name && user.location) {
     function pomodoroStart() {
         if(!onBreak) {
             c('main #pomodoroArea h2').style.color = 'white';
-            play(pomodoro.stopBell);
+            pomodoroRun(pomodoro.stopBell);
         } else {
             c('main #pomodoroArea h2').style.color = 'yellow';
-            pause(breakCount, pomodoro.startBell);
+            pomodoroBreak(breakCount, pomodoro.startBell);
         }
 
         //  THE SAME BUTTON PLAY RUN PLAY & PAUSE FUNCTIONS
         // WHEN FINISH PLAY, START PAUSE MODE
-        function play() {
+        function pomodoroRun() {
             let minutes = pomodoro.time -1;
             let seconds =  60;
 
@@ -218,7 +218,7 @@ if(user.name && user.location) {
             onBreak = true;
             checkNextStep();
         }
-        function pause() {
+        function pomodoroBreak() {
             let minutes;
             let seconds = 60;
         
@@ -270,6 +270,12 @@ if(user.name && user.location) {
                 }, (pomodoro.time * 60000))
             }
         }
+        function pomodoroPause() {
+
+        }
+    }
+    function pomodoroStop() {
+        
     }
 
 } else {
@@ -290,8 +296,6 @@ if(user.name && user.location) {
     }
 }
 
-
-//  FUNCTIONS
 // API WEATHER REQUEST
 async function printWeather(cityLocation) {
     let w = await getWeather(cityLocation);
@@ -315,7 +319,6 @@ async function printWeather(cityLocation) {
     c('#wind h4').innerHTML = `${w.wind.speed.toFixed()} Km/h`;
     c('#sunrise h4').innerHTML = `${convertTimeStamp(w.sys.sunrise)}`;
     c('#sunset h4').innerHTML = `${convertTimeStamp(w.sys.sunset)}`;
-
 
     async function getWeather(location) {
         let response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=87a5b62ad4b2fe6a87880936190ccd07&units=metric`);
