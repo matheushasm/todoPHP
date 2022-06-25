@@ -1,6 +1,3 @@
-const c = (c) => document.querySelector(c);
-const cs = (cs) => document.querySelectorAll(cs);
-
 class User {
     constructor(name='', location) {
         this.name = name;
@@ -8,35 +5,53 @@ class User {
     }
 }
 class Pomodoro {
-    constructor(time=25, shortBreak=5, longBreak=15, longBreakAfter=4, shortBell=1, longBell=1) {
+    constructor(time=25, shortBreak=5, longBreak=15, longBreakAfter=4, stopBell=1, startBell=1) {
         this.time = time;
         this.shortBreak = shortBreak;
         this.longBreak = longBreak;
         this.longBreakAfter = longBreakAfter;
-        this.shortBell = shortBell;
-        this.longBell = longBell;
+        this.stopBell = stopBell;
+        this.startBell = startBell;
     }
 }
 
+const c = (c) => document.querySelector(c);
+const cs = (cs) => document.querySelectorAll(cs);
+
 let user = new User(localStorage.username, localStorage.location);
+let pomodoro = new Pomodoro(localStorage.time, localStorage.shortBreak, localStorage.longBreak, 
+                            localStorage.longBreakAfter, localStorage.stopBell, localStorage.startBell);
 
-let pomodoro = new Pomodoro(localStorage.time, 
-                            localStorage.shortBreak, 
-                            localStorage.longBreak, 
-                            localStorage.longBreakAfter, 
-                            localStorage.shortBell, 
-                            localStorage.longBell
-);
+setInterval(() => {
+    printCurrentTime();
 
-setInterval(printCurrentTime, 1000);
+    //  TIMES FUNCTION
+    //  PRINT CURRENT TIME
+    function printCurrentTime() {
+        let time = new Date();
+        let h = time.getHours();
+        let m = time.getMinutes();
+
+        c('main #clock h2').innerHTML = `${ (h<10)? `0${h}` : h }:${ (m<10)? `0${m}` : m }`;
+        c('main #clock h4').innerHTML = printCurrentDayState(h);
+    }
+    function printCurrentDayState(h) {
+        if(h > 5 && h < 12) {
+            return `Good Morning ${user.name}`;
+        } else if(h > 11 && h < 18) {
+            return `Good Afternoon ${user.name}`;
+        } else if(h > 17 && h < 24) {
+            return `Good Evening ${user.name ? user.name : ''}`;
+        } else if(h >= 0 && h < 5) {
+            return `Good Evening ${user.name}`;
+        }
+    }
+}, 1);
 
 if(user.name && user.location) {
     printWeather(user.location);
     showLoggedContent();
 
-
-
-        // EVENT FUNCTIONS
     c('main').addEventListener('mouseover', showConfigButtons);
     c('main').addEventListener('mouseleave', hiddenConfigButtons);
 
@@ -44,7 +59,7 @@ if(user.name && user.location) {
     c('#handlePomodoroButton').addEventListener('click', showPomodoro);
     c('#handleTimerButton').addEventListener('click', showTimer);
 
-    c('#timerButtonArea').addEventListener('click', showTimerArea);
+    c('#timerButtonArea').addEventListener('click', showTimerConfigArea);
     c('#configButtonArea').addEventListener('click', showConfigArea);
     c('#handleSetUserButton').addEventListener('click', resetUser);
 
@@ -53,9 +68,132 @@ if(user.name && user.location) {
     c('#handleSavePomodoroConfig').addEventListener('click', handleSavePomodoroConfig);
 
     c('#handlePomodoroPlay').addEventListener('click', pomodoroStart);
+
+    // EVENT FUNCTIOS
+    function showLoggedContent() {
+        c('#logged').style.display = 'block';
+        c('#weather').style.display = 'block';
+    }
+    function showClock() {
+        c('main #clock').style.display = 'block';
+        c('main #timerArea').style.display = 'none';
+        c('main #pomodoroArea').style.display = 'none';
+    }
+    function showPomodoro(p) {
+        c('main #clock').style.display = 'none';
+        c('main #timerArea').style.display = 'none';
+        c('main #pomodoroArea').style.display = 'block';
+        c('main #pomodoroArea h2').innerHTML = `${pomodoro.time}:00`;
+    }
+    function showTimer() {
+        c('main #timerArea').style.display = 'block';
+        c('main #clock').style.display = 'none';
+        c('main #pomodoroArea').style.display = 'none';
+    }
+    function showConfigButtons() {
+        c('#timerButtonArea').style.display = 'block';
+        c('#configButtonArea').style.display = 'block';
+    }
+    function hiddenConfigButtons() {
+        c('#timerButtonArea').style.display = 'none';
+        c('#configButtonArea').style.display = 'none';
+    }
+    function showTimerConfigArea() {
+        if(c('#timerConfigArea').style.display == 'block') {
+            c('#timerConfigArea').style.display = 'none';
+        } else {
+            c('#timerConfigArea').style.display = 'block';
+        }
+    }
+    function showConfigArea() {
+        if(c('#userConfigurationArea').style.display == 'block') {
+            c('#userConfigurationArea').style.display = 'none';
+        } else {
+            c('#userConfigurationArea').style.display = 'block';
+        }
+    }
+    function resetUser() {
+        localStorage.removeItem('username');
+        localStorage.removeItem('location');
+        window.location.reload(true);
+    }
+
+
+    function openPomodoroConfigArea() {
+        c('#pomodoroConfigurationArea').style.display = 'block';
+        c('#pomodoroConfigurationArea').style.opacity = '1';
+    
+        setCurrentSelected( cs('#setPomodoroLength option'), pomodoro.time );
+        setCurrentSelected( cs('#setPomodoroShortBreak option'), pomodoro.shortBreak );
+        setCurrentSelected( cs('#setPomodoroLongBreak option'), pomodoro.longBreak );
+        setCurrentSelected( cs('#setPomodorolongAfter option'), pomodoro.longBreakAfter );
+    
+        setCurrtentChecked( cs('#startBreakBell input'), pomodoro.stopBell );
+        setCurrtentChecked( cs('#stopBreakBell input'), pomodoro.startBell );
+    
+        function setCurrentSelected(arr, value) {
+            arr.forEach( item => {
+                let key = item.getAttribute('value');
+                if(key == value) {
+                    item.selected = true;
+                }
+            })
+        }
+        function setCurrtentChecked(arr, value) {
+            arr.forEach( item => {
+                let key = item.getAttribute('value');
+                if(key == value) {
+                    item.checked = true;
+                }
+            })
+        }
+    }
+    function closePomodoroConfigArea() {
+        c('#pomodoroConfigurationArea').style.opacity = '0';
+        c('#pomodoroConfigurationArea').style.display = 'none';
+    }
+    function handleSavePomodoroConfig() {
+        cs('#startBreakBell input').forEach(item => handleSaveCheckedInputs(item, 'stopBell'));
+        cs('#stopBreakBell input').forEach(item => handleSaveCheckedInputs(item, 'startBell'));
+    
+        cs('#setPomodoroLength option').forEach(item => handleSaveSelectedOption(item, 'time'))
+        cs('#setPomodoroShortBreak option').forEach(item => handleSaveSelectedOption(item, 'shortBreak'))
+        cs('#setPomodoroLongBreak option').forEach(item => handleSaveSelectedOption(item, 'longBreak'))
+        cs('#setPomodorolongAfter option').forEach(item => handleSaveSelectedOption(item, 'longBreakAfter'))
+    
+        c('#pomodoroConfigurationArea').style.opacity = '0';
+        c('#pomodoroConfigurationArea').style.display = 'none';
+    
+        reloadPomodoro();
+    
+        function handleSaveCheckedInputs(item, storage) {
+            if(item.checked) {
+                localStorage.setItem(storage, parseInt(item.value));
+            }
+        }
+        function handleSaveSelectedOption(item, storage) {
+            if(item.selected) {
+                localStorage.setItem(storage, parseInt(item.value));
+            }
+        }
+    }
+
 } else {
     c('#unlogged').style.display = 'block';
     c('#unlogged input[type=submit]').addEventListener('click', saveUser);
+
+    function saveUser() {
+        const nameInput = c('#unlogged #userName');
+        const locationInput = c('#unlogged #userLocation');
+    
+        if(nameInput.value && locationInput.value) {
+            localStorage.username = nameInput.value;
+            localStorage.location = locationInput.value;
+            document.location.reload(true);
+        } else {
+            alert("Please, make shure you have filled all fields info." );
+        }
+    }
 }
 
 
@@ -83,149 +221,93 @@ async function printWeather(cityLocation) {
     c('#wind h4').innerHTML = `${w.wind.speed.toFixed()} Km/h`;
     c('#sunrise h4').innerHTML = `${convertTimeStamp(w.sys.sunrise)}`;
     c('#sunset h4').innerHTML = `${convertTimeStamp(w.sys.sunset)}`;
-}
-function printFullWeather() {
-    c('#weather').style.display = 'none';
-    c('#fullWeather').style.display = 'block';
-    c('#fullWeather').style.opacity = '1';
-}
-function removeFullWeather() {
-    c('#fullWeather').style.opacity = '0';
-    c('#fullWeather').style.display = 'none';
-    c('#weather').style.display = 'block';
-}
-async function getWeather(location) {
-    let response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=87a5b62ad4b2fe6a87880936190ccd07&units=metric`);
-    let json = await response.json();
-    return json;
-}
 
-//  TIMES FUNCTION
-//  PRINT CURRENT TIME
-function printCurrentTime() {
-    let time = new Date();
-    let h = time.getHours();
-    let m = time.getMinutes();
 
-    c('main #clock h2').innerHTML = `${ (h<10)? `0${h}` : h }:${ (m<10)? `0${m}` : m }`;
-    c('main #clock h4').innerHTML = printCurrentDayState(h);
-}
-function printCurrentDayState(h) {
-    if(h > 5 && h < 12) {
-        return `Good Morning ${user.name}`;
-    } else if(h > 11 && h < 18) {
-        return `Good Afternoon ${user.name}`;
-    } else if(h > 17 && h < 24) {
-        return `Good Evening ${user.name ? user.name : ''}`;
-    } else if(h >= 0 && h < 5) {
-        return `Good Evening ${user.name}`;
+    async function getWeather(location) {
+        let response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=87a5b62ad4b2fe6a87880936190ccd07&units=metric`);
+        let json = await response.json();
+        return json;
+    }
+    function printFullWeather() {
+        c('#weather').style.display = 'none';
+        c('#fullWeather').style.display = 'block';
+        c('#fullWeather').style.opacity = '1';
+    }
+    function removeFullWeather() {
+        c('#fullWeather').style.opacity = '0';
+        c('#fullWeather').style.display = 'none';
+        c('#weather').style.display = 'block';
+    }
+    function convertTimeStamp(stamp) {
+        const date = new Date(stamp * 1000);
+        const h = date.getHours();
+        const m = date.getMinutes();
+        return `${ (h<10)? `0${h}` : h }:${ (m<10)? `0${m}` : m }`;
     }
 }
-function convertTimeStamp(stamp) {
-    const date = new Date(stamp * 1000);
-    const h = date.getHours();
-    const m = date.getMinutes();
-    return `${ (h<10)? `0${h}` : h }:${ (m<10)? `0${m}` : m }`;
-}
 
+//  POMODORO FUNCTIONS
+function pomodoroStart() {
+    let onBreak = true;
+    let breakCount = 0;
 
-// EVENT FUNCTIOS
-function showLoggedContent() {
-    c('#logged').style.display = 'block';
-    c('#weather').style.display = 'block';
-}
-function showConfigButtons() {
-    c('#timerButtonArea').style.display = 'block';
-    c('#configButtonArea').style.display = 'block';
-}
-function hiddenConfigButtons() {
-    c('#timerButtonArea').style.display = 'none';
-    c('#configButtonArea').style.display = 'none';
-}
-function showTimerArea() {
-    if(c('#timerConfigArea').style.display == 'block') {
-        c('#timerConfigArea').style.display = 'none';
+    if(!onBreak) {
+        c('main #pomodoroArea h2').style.color = 'white';
+        play(pomodoro.stopBell);
     } else {
-        c('#timerConfigArea').style.display = 'block';
+        c('main #pomodoroArea h2').style.color = 'yellow';
+        pause(breakCount, pomodoro.startBell);
     }
-}
-function showConfigArea() {
-    if(c('#userConfigurationArea').style.display == 'block') {
-        c('#userConfigurationArea').style.display = 'none';
-    } else {
-        c('#userConfigurationArea').style.display = 'block';
-    }
-}
-function saveUser() {
-    const nameInput = c('#unlogged #userName');
-    const locationInput = c('#unlogged #userLocation');
 
-    if(nameInput.value && locationInput.value) {
-        localStorage.username = nameInput.value;
-        localStorage.location = locationInput.value;
-        document.location.reload(true);
-    } else {
-        alert("Please, make shure you have filled all fields info." );
+
+    function play(bell) {
+        let minutes = 0 //pomodoro.time -1;
+        let seconds =  5 //60;
+        pomodoroCount(minutes, seconds, bell);
+    }
+    function pause(breakCount, bell) {
+        let minutes = 0;
+        let seconds = 5 //60;
+    
+        // if(breakCount === pomodoro.longBreakAfter) {
+        //     minutes = pomodoro.longBreak;
+        // } else {
+        //     minutes = pomodoro.shortBreak;
+        // }
+        pomodoroCount(minutes, seconds, bell);
+    }
+    function pomodoroCount(minutes, seconds, bell) {
+        const pomodoroInterval = setInterval(() => {
+            if(seconds > 0) {
+                seconds--;
+                if(seconds === 0 && minutes > 0) {
+                    minutes--;
+                    seconds = 59;
+                }
+            } else {
+                clearInterval(pomodoroInterval);
+                pomodoroPlayBell(bell);
+            }
+            c('main #pomodoroArea h2').innerHTML = `${ (minutes < 10)? `0${minutes}`: minutes }:${ (seconds < 10)? `0${seconds}` : seconds }`;
+        }, 1000);
+    }
+    function pomodoroPlayBell(soundNumber) {
+        new Audio(`assets/sounds/${soundNumber}.wav`).play();
     }
 }
-function resetUser() {
-    localStorage.removeItem('username');
-    localStorage.removeItem('location');
+
+
+
+
+
+
+
+function reloadPomodoro() {
     window.location.reload(true);
+    setTimeout(showPomodoro , 2000);
 }
 
-
-
-
-function showClock() {
-    c('main #clock').style.display = 'block';
-    c('main #timerArea').style.display = 'none';
-    c('main #pomodoroArea').style.display = 'none';
-}
-function showTimer() {
-    c('main #timerArea').style.display = 'block';
-    c('main #clock').style.display = 'none';
-    c('main #pomodoroArea').style.display = 'none';
-}
-function showPomodoro(p) {
-    c('main #clock').style.display = 'none';
-    c('main #timerArea').style.display = 'none';
-    c('main #pomodoroArea').style.display = 'block';
-    c('main #pomodoroArea h2').innerHTML = `${pomodoro.time}:00`;
-}
-
-
-
-//  POMODORO EVENTS
-function openPomodoroConfigArea() {
-    c('#pomodoroConfigurationArea').style.display = 'block';
-    c('#pomodoroConfigurationArea').style.opacity = '1';
-
-    setCurrentSelected( cs('#setPomodoroLength option'), pomodoro.time );
-    setCurrentSelected( cs('#setPomodoroShortBreak option'), pomodoro.shortBreak );
-    setCurrentSelected( cs('#setPomodoroLongBreak option'), pomodoro.longBreak );
-    setCurrentSelected( cs('#setPomodorolongAfter option'), pomodoro.longBreakAfter );
-
-    setCurrtentChecked( cs('#startBreakBell input'), pomodoro.shortBell );
-    setCurrtentChecked( cs('#stopBreakBell input'), pomodoro.longBell );
-
-    function setCurrentSelected(arr, value) {
-        arr.forEach( item => {
-            let key = item.getAttribute('value');
-            if(key == value) {
-                item.selected = true;
-            }
-        })
-    }
-    function setCurrtentChecked(arr, value) {
-        arr.forEach( item => {
-            let key = item.getAttribute('value');
-            if(key == value) {
-                item.checked = true;
-            }
-        })
-    }
-}
+    // ONCLICK FUNCTIONS
 function checkboxSelected(e, classItem) {
     cs(classItem).forEach( item => {
         if(item.checked) {
@@ -234,63 +316,3 @@ function checkboxSelected(e, classItem) {
     })
     e.target.checked = true;
 }
-
-
-
-
-function closePomodoroConfigArea() {
-    c('#pomodoroConfigurationArea').style.opacity = '0';
-    c('#pomodoroConfigurationArea').style.display = 'none';
-}
-
-function handleSavePomodoroConfig() {
-    cs('#startBreakBell input').forEach(item => handleSaveCheckedInputs(item, 'shortBell'));
-    cs('#stopBreakBell input').forEach(item => handleSaveCheckedInputs(item, 'longBell'));
-
-    cs('#setPomodoroLength option').forEach(item => handleSaveSelectedOption(item, 'time'))
-    cs('#setPomodoroShortBreak option').forEach(item => handleSaveSelectedOption(item, 'shortBreak'))
-    cs('#setPomodoroLongBreak option').forEach(item => handleSaveSelectedOption(item, 'longBreak'))
-    cs('#setPomodorolongAfter option').forEach(item => handleSaveSelectedOption(item, 'longBreakAfter'))
-
-    function handleSaveCheckedInputs(item, storage) {
-        if(item.checked) {
-            localStorage.setItem(storage, parseInt(item.value));
-        }
-    }
-    function handleSaveSelectedOption(item, storage) {
-        if(item.selected) {
-            localStorage.setItem(storage, parseInt(item.value));
-        }
-    }
-
-    c('#pomodoroConfigurationArea').style.opacity = '0';
-    c('#pomodoroConfigurationArea').style.display = 'none';
-    
-    window.location.reload(true);
-
-
-}
-//  POMODORO FUNCTION
-function pomodoroStart() {
-    
-    let shortBreak = pomodoro.shortBreak;
-    let largeBreak = pomodoro.largeBreak;
-    let longBreakAfter = pomodoro.longBreakAfter;
-
-    let minutes = pomodoro.time -1;
-    let seconds = 60;
-
-    setInterval(() => {
-        if(seconds > 0) {
-            seconds--;
-            if(seconds === 0 && minutes > 0) {
-                minutes--;
-                seconds = 59;
-            }
-        } else {
-
-        }
-        c('main #pomodoroArea h2').innerHTML = `${ (minutes < 10)? `0${minutes}`: minutes }:${ (seconds < 10)? `0${seconds}` : seconds }`;
-    }, 1000);
-}
-
