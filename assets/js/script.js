@@ -49,6 +49,9 @@ setInterval(() => {
 }, 1);
 
 if(user.name && user.location) {
+    let onBreak = false;
+    let breakCount = 0;
+
     printWeather(user.location);
     showLoggedContent();
 
@@ -69,6 +72,18 @@ if(user.name && user.location) {
 
     c('#handlePomodoroPlay').addEventListener('click', pomodoroStart);
 
+    switch(sessionStorage.location) {
+        case 'clock':
+            showClock()
+        break;
+        case 'pomodoro':
+            showPomodoro()
+        break;
+        case 'timer':
+            showTimer()
+        break;
+    }
+
     // EVENT FUNCTIOS
     function showLoggedContent() {
         c('#logged').style.display = 'block';
@@ -78,17 +93,20 @@ if(user.name && user.location) {
         c('main #clock').style.display = 'block';
         c('main #timerArea').style.display = 'none';
         c('main #pomodoroArea').style.display = 'none';
+        sessionStorage.location = 'clock';
     }
-    function showPomodoro(p) {
+    function showPomodoro() {
         c('main #clock').style.display = 'none';
         c('main #timerArea').style.display = 'none';
         c('main #pomodoroArea').style.display = 'block';
         c('main #pomodoroArea h2').innerHTML = `${pomodoro.time}:00`;
+        sessionStorage.location = 'pomodoro';
     }
     function showTimer() {
         c('main #timerArea').style.display = 'block';
         c('main #clock').style.display = 'none';
         c('main #pomodoroArea').style.display = 'none';
+        sessionStorage.location = 'timer';
     }
     function showConfigButtons() {
         c('#timerButtonArea').style.display = 'block';
@@ -115,6 +133,7 @@ if(user.name && user.location) {
     function resetUser() {
         localStorage.removeItem('username');
         localStorage.removeItem('location');
+        sessionStorage.location = 'clock';
         window.location.reload(true);
     }
 
@@ -164,7 +183,8 @@ if(user.name && user.location) {
         c('#pomodoroConfigurationArea').style.opacity = '0';
         c('#pomodoroConfigurationArea').style.display = 'none';
     
-        reloadPomodoro();
+        sessionStorage.location = 'pomodoro';
+        window.location.reload(true);
     
         function handleSaveCheckedInputs(item, storage) {
             if(item.checked) {
@@ -174,6 +194,80 @@ if(user.name && user.location) {
         function handleSaveSelectedOption(item, storage) {
             if(item.selected) {
                 localStorage.setItem(storage, parseInt(item.value));
+            }
+        }
+    }
+
+        //  POMODORO FUNCTIONS
+    function pomodoroStart() {
+        if(!onBreak) {
+            c('main #pomodoroArea h2').style.color = 'white';
+            play(pomodoro.stopBell);
+        } else {
+            c('main #pomodoroArea h2').style.color = 'yellow';
+            pause(breakCount, pomodoro.startBell);
+        }
+
+        //  THE SAME BUTTON PLAY RUN PLAY & PAUSE FUNCTIONS
+        // WHEN FINISH PLAY, START PAUSE MODE
+        function play() {
+            let minutes = pomodoro.time -1;
+            let seconds =  60;
+
+            pomodoroCount(minutes, seconds, pomodoro.stopBell);
+            onBreak = true;
+            checkNextStep();
+        }
+        function pause() {
+            let minutes;
+            let seconds = 60;
+        
+            if(breakCount === pomodoro.longBreakAfter) {
+                minutes = pomodoro.longBreak;
+            } else {
+                minutes = pomodoro.shortBreak;
+            }
+            pomodoroCount(minutes, seconds, pomodoro.startBell);
+            onBreak = false;
+            breakCount++;
+            checkNextStep();
+        }
+        function pomodoroPlayBell(soundNumber) {
+            new Audio(`assets/sounds/${soundNumber}.wav`).play();
+        }
+        function pomodoroCount(minutes, seconds, bell) {
+            const pomodoroInterval = setInterval(() => {
+                if(seconds > 0) {
+                    seconds--;
+                    if(seconds === 0 && minutes > 0) {
+                        minutes--;
+                        seconds = 59;
+                    }
+                } else {
+                    clearInterval(pomodoroInterval);
+                    pomodoroPlayBell(bell);
+                }
+                c('main #pomodoroArea h2').innerHTML = `${ (minutes < 10)? `0${minutes}`: minutes }:${ (seconds < 10)? `0${seconds}` : seconds }`;
+            }, 1000);
+        }
+        function checkNextStep() {
+            if(onBreak) {
+                if(breakCount === pomodoro.longBreakAfter) {
+                    setTimeout(() => {
+                        c('main #pomodoroArea h2').style.color = 'yellow';
+                        c('main #pomodoroArea h2').innerHTML = `${ (pomodoro.longBreak < 10)? `0${pomodoro.longBreak}`: pomodoro.longBreak }:00`;
+                    }, (pomodoro.longBreak * 60000))
+                } else {
+                    setTimeout(() => {
+                        c('main #pomodoroArea h2').style.color = 'yellow';
+                        c('main #pomodoroArea h2').innerHTML = `${ (pomodoro.shortBreak < 10)? `0${pomodoro.shortBreak}`: pomodoro.shortBreak }:00`;
+                    }, (pomodoro.shortBreak * 60000))
+                }
+            } else {
+                setTimeout(() => {
+                    c('main #pomodoroArea h2').style.color = 'white';
+                    c('main #pomodoroArea h2').innerHTML = `${ (pomodoro.time < 10)? `0${pomodoro.time}`: pomodoro.time }:00`;
+                }, (pomodoro.time * 60000))
             }
         }
     }
@@ -244,67 +338,6 @@ async function printWeather(cityLocation) {
         const m = date.getMinutes();
         return `${ (h<10)? `0${h}` : h }:${ (m<10)? `0${m}` : m }`;
     }
-}
-
-//  POMODORO FUNCTIONS
-function pomodoroStart() {
-    let onBreak = true;
-    let breakCount = 0;
-
-    if(!onBreak) {
-        c('main #pomodoroArea h2').style.color = 'white';
-        play(pomodoro.stopBell);
-    } else {
-        c('main #pomodoroArea h2').style.color = 'yellow';
-        pause(breakCount, pomodoro.startBell);
-    }
-
-
-    function play(bell) {
-        let minutes = 0 //pomodoro.time -1;
-        let seconds =  5 //60;
-        pomodoroCount(minutes, seconds, bell);
-    }
-    function pause(breakCount, bell) {
-        let minutes = 0;
-        let seconds = 5 //60;
-    
-        // if(breakCount === pomodoro.longBreakAfter) {
-        //     minutes = pomodoro.longBreak;
-        // } else {
-        //     minutes = pomodoro.shortBreak;
-        // }
-        pomodoroCount(minutes, seconds, bell);
-    }
-    function pomodoroCount(minutes, seconds, bell) {
-        const pomodoroInterval = setInterval(() => {
-            if(seconds > 0) {
-                seconds--;
-                if(seconds === 0 && minutes > 0) {
-                    minutes--;
-                    seconds = 59;
-                }
-            } else {
-                clearInterval(pomodoroInterval);
-                pomodoroPlayBell(bell);
-            }
-            c('main #pomodoroArea h2').innerHTML = `${ (minutes < 10)? `0${minutes}`: minutes }:${ (seconds < 10)? `0${seconds}` : seconds }`;
-        }, 1000);
-    }
-    function pomodoroPlayBell(soundNumber) {
-        new Audio(`assets/sounds/${soundNumber}.wav`).play();
-    }
-}
-
-
-
-
-
-
-
-function reloadPomodoro() {
-    window.location.reload(true);
-    setTimeout(showPomodoro , 2000);
 }
 
     // ONCLICK FUNCTIONS
