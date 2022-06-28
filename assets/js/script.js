@@ -71,6 +71,13 @@ if(user.name && user.location) {
     c('#handleSavePomodoroConfig').addEventListener('click', handleSavePomodoroConfig);
 
     c('#handlePomodoroPlay').addEventListener('click', pomodoroStart);
+    // c('#handlePomodoroPause').addEventListener('click', pomodoroPause);
+    c('#handlePomodoroStop').addEventListener('click', pomodoroStop);
+
+    c('#handleTimerPlay').addEventListener('click', timerStart);
+    c('#handleTimerPause').addEventListener('click', timerPause);
+    c('#handleTimerReset').addEventListener('click', timerReset);
+
 
     switch(sessionStorage.location) {
         case 'clock':
@@ -103,6 +110,10 @@ if(user.name && user.location) {
         sessionStorage.location = 'pomodoro';
     }
     function showTimer() {
+        if(sessionStorage.countTimer) {
+            c('main #timerArea h2').innerHTML = sessionStorage.countTimer;
+            c('main #timerArea #handleTimerReset').style.display = 'block';
+        }
         c('main #timerArea').style.display = 'block';
         c('main #clock').style.display = 'none';
         c('main #pomodoroArea').style.display = 'none';
@@ -200,6 +211,10 @@ if(user.name && user.location) {
 
         //  POMODORO FUNCTIONS
     function pomodoroStart() {
+        c('#handlePomodoroPlay').style.display = 'none';
+        // c('#handlePomodoroPause').style.display = 'block';
+        c('#handlePomodoroStop').style.display = 'block';
+
         if(!onBreak) {
             c('main #pomodoroArea h2').style.color = 'white';
             pomodoroRun(pomodoro.stopBell);
@@ -208,8 +223,10 @@ if(user.name && user.location) {
             pomodoroBreak(breakCount, pomodoro.startBell);
         }
 
-        //  THE SAME BUTTON PLAY RUN PLAY & PAUSE FUNCTIONS
-        // WHEN FINISH PLAY, START PAUSE MODE
+        /*
+            THE SAME BUTTON PLAY RUN PLAY & PAUSE FUNCTIONS
+            WHEN FINISH PLAY, START PAUSE MODE
+        */
         function pomodoroRun() {
             let minutes = pomodoro.time -1;
             let seconds =  60;
@@ -270,14 +287,66 @@ if(user.name && user.location) {
                 }, (pomodoro.time * 60000))
             }
         }
-        function pomodoroPause() {
+    }
+    /*
+    function pomodoroPause() {
+        let realTime = pomodoro.time;
+        let currentTime = c('main #pomodoroArea h2').innerHTML;
+    }
+    */
+    function pomodoroStop() {
+        window.location.reload(true);
+    }
 
+    //  TIMER FUNCTIONS
+    function timerStart() {
+        if(sessionStorage.countTimer) {
+            timerCount( currentTimer()[0], currentTimer()[1], currentTimer()[2] );
+        } else {
+            timerCount(0, 0, 0);
+        }
+
+        c('main #timerArea #handleTimerPlay').style.display = 'none';
+        c('main #timerArea #handleTimerPause').style.display = 'block';
+        c('main #timerArea #handleTimerReset').style.display = 'block';
+
+        function currentTimer() {
+            let result = [];
+            let lastTimer = sessionStorage.countTimer.split(':');
+            lastTimer.forEach( item => result.push( parseInt( item.trim() ) ) );
+            return result;
         }
     }
-    function pomodoroStop() {
-        
-    }
+    function timerPause() {
+        const currentTime = c('main #timerArea h2').innerHTML;
+        sessionStorage.countTimer = currentTime;
+        window.location.reload(true);
+        c('main #timerArea h2').innerHTML = currentTime;
 
+        c('main #timerArea #handleTimerPlay').style.display = 'block';
+        c('main #timerArea #handleTimerPause').style.display = 'none';
+    }
+    function timerReset() {
+        c('main #timerArea h2').innerHTML = '00:00:00';
+        sessionStorage.countTimer = '';
+        window.location.reload(true);
+    }
+    function timerCount(minutes, seconds, mileseconds) {
+        setInterval(() => {
+            mileseconds++;
+            if(mileseconds === 9) {
+                seconds++;
+                mileseconds = 0;
+                if(seconds === 59) {
+                    minutes++;
+                    seconds = 0;
+                }
+            }
+            c('main #timerArea h2').innerHTML = `${ (minutes < 10)? `0${minutes}`: minutes }:
+                                                ${ (seconds < 10)? `0${seconds}` : seconds }:
+                                                ${ (mileseconds < 10)? `0${mileseconds}` : mileseconds }`;
+        }, 100);
+    }
 } else {
     c('#unlogged').style.display = 'block';
     c('#unlogged input[type=submit]').addEventListener('click', saveUser);

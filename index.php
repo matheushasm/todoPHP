@@ -88,15 +88,40 @@ class="font-sans text-lg text-white bg-slate-900 select-none
             <div id="pomodoroArea"
             class="hidden">
                 <h2 class="p-4 text-9xl font-bold"></h2>
-                <div id="handlePomodoroPlay"
-                class="m-auto w-8 h-8">
-                    <i class="material-icons" style="font-size: 50px">play_arrow</i>
+                <div 
+                class="w-full flex justify-center">
+                    <button id="handlePomodoroPlay"
+                    class="mr-2 p-2 text-2xl font-bold bg-slate-600/50 rounded hover:bg-slate-700/50">
+                        Play
+                    </button>
+                    <!-- <button id="handlePomodoroPause"
+                    class="mr-2 p-2 text-2xl font-bold bg-slate-600/50 rounded hover:bg-slate-700/50 hidden">
+                        Pause
+                    </button> -->
+                    <button id="handlePomodoroStop"
+                    class="mr-2 p-2 text-2xl font-bold bg-slate-600/50 rounded hover:bg-slate-700/50 hidden">
+                        Stop
+                    </button>
                 </div>
             </div>
             <div id="timerArea"
             class="hidden">
-                <h2 class="p-4 text-9xl font-bold"></h2>
-                <h4 class="mt-20 mb-20 text-4xl text-center"></h4>
+                <h2 class="p-4 text-8xl font-bold">00:00:00</h2>
+                <div 
+                class="w-full flex justify-center">
+                    <button id="handleTimerPlay"
+                    class="mr-2 p-2 text-2xl font-bold bg-slate-600/50 rounded hover:bg-slate-700/50">
+                        Play
+                    </button>
+                    <button id="handleTimerPause"
+                    class="mr-2 p-2 text-2xl font-bold bg-slate-600/50 rounded hover:bg-slate-700/50 hidden">
+                        Pause
+                    </button>
+                    <button id="handleTimerReset"
+                    class="mr-2 p-2 text-2xl font-bold bg-slate-600/50 rounded hover:bg-slate-700/50 hidden">
+                        Reset
+                    </button>
+                </div>
             </div>
 
 
@@ -111,7 +136,7 @@ class="font-sans text-lg text-white bg-slate-900 select-none
                         <div class="w-full p-1 text-center rounded bg-red-500/70 hover:bg-red-500/90">x</div>
                     </div>
                 </div>
-                <div id="configButtonArea" class="ml-4 p-4 absolute left-[68%] top-[62%] cursor-pointer z-10 hidden hover:rounded hover:bg-slate-900/20">
+                <div id="configButtonArea" class="ml-4 p-4 absolute left-[68%] top-[60%] cursor-pointer z-10 hidden hover:rounded hover:bg-slate-900/20">
                     <i class="gg-more"></i>
                     <div id="userConfigurationArea" class="mt-2 rounded hover:shadow-xl hidden">
                         <div id="handleSetUserButton" class="p-2 text-lg  hover:bg-orange-400 hover:text-white ease-in duration-300">Change User/Location</div>
