@@ -1,7 +1,5 @@
 <?php
-
 require_once './requests/apiObject.php';
-
 
 // QUOTES API REQUEST
 $quoteOpt = new Options();

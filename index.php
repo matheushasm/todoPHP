@@ -18,7 +18,7 @@
 
 </head>
 <body
-style="background-image: url(<?='https://images4.alphacoders.com/359/3596.jpg'//$bgImage;?>);text-shadow: 1px 1px #000"
+style="background-image: url(<?='https://images4.alphacoders.com/359/3596.jpg' //$bgImage;?>);text-shadow: 1px 1px #000"
 class="font-sans text-lg text-white bg-slate-900 select-none
         bg-neutral-900 bg-cover bg-center"  
 >
@@ -263,8 +263,8 @@ class="font-sans text-lg text-white bg-slate-900 select-none
             flex flex-col items-center
             text-xl ease-in duration-300 
             overflow-hidden">
-            <p class="container m-auto text-center break-normal"><?='Loren Ipsun Loren Ipsun Loren Ipsun Loren Ipsun'//$quote->content;?></p>
-            <p class="container m-auto text-center"><small><?='Loren Ipsun'//$quote->originator->name;?></small></p> 
+            <p class="container m-auto text-center break-normal"><?='bla bla bla'//$quote->content;?></p>
+            <p class="container m-auto text-center"><small><?='bla bla bla' //$quote->originator->name;?></small></p> 
     </footer>
 
     <script type="text/javascript" src="./assets/js/script.js"></script>

@@ -1,11 +1,24 @@
 class User {
-    constructor(name='', location) {
+    constructor(name='', city, state, country, continent, ip) {
         this.name = name;
-        this.location = location;
+        this.city = city;
+        this.state = state;
+        this.country = country;
+        this.continent = continent;
+        this.ip = ip;
+
     }
 }
 class Pomodoro {
-    constructor(time=25, shortBreak=5, longBreak=15, longBreakAfter=4, stopBell=1, startBell=1) {
+    constructor(
+        time=25, 
+        shortBreak=5, 
+        longBreak=15, 
+        longBreakAfter=4, 
+        stopBell=1, 
+        startBell=1
+        ) 
+    {
         this.time = time;
         this.shortBreak = shortBreak;
         this.longBreak = longBreak;
@@ -18,41 +31,23 @@ class Pomodoro {
 const c = (c) => document.querySelector(c);
 const cs = (cs) => document.querySelectorAll(cs);
 
-let user = new User(localStorage.username, localStorage.location);
-let pomodoro = new Pomodoro(localStorage.time, localStorage.shortBreak, localStorage.longBreak, 
-                            localStorage.longBreakAfter, localStorage.stopBell, localStorage.startBell);
+let user = new User(localStorage.username, localStorage.city);
+let pomodoro = new Pomodoro(
+                            localStorage.time, 
+                            localStorage.shortBreak, 
+                            localStorage.longBreak, 
+                            localStorage.longBreakAfter, 
+                            localStorage.stopBell, 
+                            localStorage.startBell
+);
 
-setInterval(() => {
-    printCurrentTime();
+getCurrentWeader();
 
-    //  TIMES FUNCTION
-    //  PRINT CURRENT TIME
-    function printCurrentTime() {
-        let time = new Date();
-        let h = time.getHours();
-        let m = time.getMinutes();
-
-        c('main #clock h2').innerHTML = `${ (h<10)? `0${h}` : h }:${ (m<10)? `0${m}` : m }`;
-        c('main #clock h4').innerHTML = printCurrentDayState(h);
-    }
-    function printCurrentDayState(h) {
-        if(h > 5 && h < 12) {
-            return `Good Morning ${user.name}`;
-        } else if(h > 11 && h < 18) {
-            return `Good Afternoon ${user.name}`;
-        } else if(h > 17 && h < 24) {
-            return `Good Evening ${user.name ? user.name : ''}`;
-        } else if(h >= 0 && h < 5) {
-            return `Good Evening ${user.name}`;
-        }
-    }
-}, 1);
-
-if(user.name && user.location) {
+if(user.name && user.city) {
     let onBreak = false;
     let breakCount = 0;
 
-    printWeather(user.location);
+    printWeather(user.city);
     showLoggedContent();
 
     c('main').addEventListener('mouseover', showConfigButtons);
@@ -77,7 +72,6 @@ if(user.name && user.location) {
     c('#handleTimerPlay').addEventListener('click', timerStart);
     c('#handleTimerPause').addEventListener('click', timerPause);
     c('#handleTimerReset').addEventListener('click', timerReset);
-
 
     switch(sessionStorage.location) {
         case 'clock':
@@ -147,8 +141,6 @@ if(user.name && user.location) {
         sessionStorage.location = 'clock';
         window.location.reload(true);
     }
-
-
     function openPomodoroConfigArea() {
         c('#pomodoroConfigurationArea').style.display = 'block';
         c('#pomodoroConfigurationArea').style.opacity = '1';
@@ -209,7 +201,7 @@ if(user.name && user.location) {
         }
     }
 
-        //  POMODORO FUNCTIONS
+    //  POMODORO FUNCTIONS
     function pomodoroStart() {
         c('#handlePomodoroPlay').style.display = 'none';
         // c('#handlePomodoroPause').style.display = 'block';
@@ -288,12 +280,6 @@ if(user.name && user.location) {
             }
         }
     }
-    /*
-    function pomodoroPause() {
-        let realTime = pomodoro.time;
-        let currentTime = c('main #pomodoroArea h2').innerHTML;
-    }
-    */
     function pomodoroStop() {
         window.location.reload(true);
     }
@@ -389,7 +375,7 @@ async function printWeather(cityLocation) {
     c('#sunrise h4').innerHTML = `${convertTimeStamp(w.sys.sunrise)}`;
     c('#sunset h4').innerHTML = `${convertTimeStamp(w.sys.sunset)}`;
 
-    async function getWeather(location) {
+    getWeather = async location => {
         let response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=87a5b62ad4b2fe6a87880936190ccd07&units=metric`);
         let json = await response.json();
         return json;
@@ -412,7 +398,47 @@ async function printWeather(cityLocation) {
     }
 }
 
-    // ONCLICK FUNCTIONS
+//ONLOAD FUNCTIONS
+function getCurrentWeader() {
+
+    const currentWeatherInterval = setInterval(() => {
+        printCurrentTime();
+    }, 1);
+
+    function printCurrentTime() {
+        let time = new Date();
+        let h = time.getHours();
+        let m = time.getMinutes();
+
+        c('main #clock h2').innerHTML = `${ (h<10)? `0${h}` : h }:${ (m<10)? `0${m}` : m }`;
+        c('main #clock h4').innerHTML = printCurrentDayState(h);
+    }
+    function printCurrentDayState(h) {
+        if(h > 5 && h < 12) {
+            return `Good Morning ${user.name}`;
+        } else if(h > 11 && h < 18) {
+            return `Good Afternoon ${user.name}`;
+        } else if(h > 17 && h < 24) {
+            return `Good Evening ${user.name ? user.name : ''}`;
+        } else if(h >= 0 && h < 5) {
+            return `Good Evening ${user.name}`;
+        }
+    }
+
+
+}
+
+function setUserData() {
+    const userData = getIP();
+
+    getIP = async () => {
+        let response = await fetch('https://api.db-ip.com/v2/free/self');
+        let json = await response.json();
+        return json;
+    }
+}
+
+// ONCLICK FUNCTIONS
 function checkboxSelected(e, classItem) {
     cs(classItem).forEach( item => {
         if(item.checked) {
