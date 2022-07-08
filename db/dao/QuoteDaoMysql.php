@@ -1,0 +1,63 @@
+<?php
+require_once 'db/models/image.php';
+
+class QuoteDaoMysql implements QuoteDao {
+    private $pdo;
+
+    public function __construct(PDO $driver) {
+        $this->pdo = $driver;
+    }
+
+    public function add(Quote $q) {
+        $sql = $this->pdo->prepare("INSERT INTO quotes (content, author) VALUES (:content, :author)");
+        $sql->bindValue(':content', $q->getContent());
+        $sql->bindValue(':author', $q->getAuthor());
+        $sql->execute();
+
+        $q->setId($this->pdo->lastInsertId());
+        return $q;
+    }
+
+    public function getAll() {
+        $array = [];
+
+        $sql = $this->pdo->query("SELECT * FROM quotes");
+        if($sql->rouCount() > 0) {}
+        $data = $sql->fetchAll();
+
+        foreach($data as $item) {
+            $q = new Quote();
+            $q->setId($item['id']);
+            $q->setContent($item['content']);
+            $q->setAuthor($item['author']);
+
+            $array = $q;
+        }
+        return $array;
+    }
+
+    public function getById($id) {
+        $sql = $this->pdo->prepare("SELECT * FROM quotes WHERE id = :id");
+        $sql->bindValue(':id', $id);
+        $sql->execute();
+
+        if($sql->rowCount() > 0) {
+            $data = $sql->fetch();
+
+            $q = new Quote();
+            $q->setId($data['id']);
+            $q->setContent($data['content']);
+            $q->setAuthor($data['author']);
+
+            return $q;
+        } else {
+            return false;
+        }
+    }
+
+    public function delete($id) {
+        $sql = $this->pdo->prepare("DELETE * FROM quotes WHERE id = :id");
+        $sql->bindValue(':id', $id);
+        $sql->execute();
+    }
+}

@@ -20,7 +20,7 @@ class Image {
 }
 
 interface ImageDao {
-    public function add(Image $i);
+    public function add(Image $u);
     public function getAll();
     public function getById($id);
     public function delete($id);

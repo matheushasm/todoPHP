@@ -5,7 +5,7 @@ class User {
     private $name;
     private $location;
     private $ip;
-    private $hash;
+    private $key;
 
     public function getId() {
         return $this->id;
@@ -35,18 +35,18 @@ class User {
         $this->ip = $i;
     }
 
-    public function getHash() {
-        return $this->hash;
+    public function getKey() {
+        return $this->key;
     }
-    public function setHash($h) {
-        $this->hash = $h;
+    public function setKey($k) {
+        $this->key = $k;
     }
 }
 
 interface UserDao {
     public function add(User $u);
     public function getAll();
-    public function getByHash($hash);
+    public function getByKey($key);
     public function getByName($name);
     public function getByLocation($location);
     public function update(User $u);

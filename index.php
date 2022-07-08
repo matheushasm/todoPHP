@@ -1,4 +1,5 @@
 <?php
+require 'config.php';
 require_once './requests/apiRequest.php';
 
 include_once './partials/header.php';
@@ -183,5 +184,4 @@ include_once './partials/header.php';
         </div>      
     </div>
 </main>
-
 <?php include_once './partials/footer.php';?>

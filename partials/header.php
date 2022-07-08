@@ -18,7 +18,7 @@
 
 </head>
 <body
-style="background-image: url(<?=$_SESSION['api']['bgImage']?>);text-shadow: 1px 1px #000"
+style="background-image: url(<?='https://images.unsplash.com/photo-1542351567-cd7b06dc08d7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8M3x8fGVufDB8fHx8&w=1000&q=80'?>);text-shadow: 1px 1px #000"
 class="font-sans text-lg text-white bg-slate-900 select-none
         bg-neutral-900 bg-cover bg-center"
 >
