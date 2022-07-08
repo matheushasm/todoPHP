@@ -1,5 +1,4 @@
 <?php
-session_start();
 require_once './requests/apiObject.php';
 
 // QUOTES API REQUEST
@@ -25,25 +24,3 @@ $backgroundOpt->setHeaders([
 $backgroundReq = new Request($backgroundOpt);
 $backgroundRes = $backgroundReq->newRequest()->photos;
 $bgImage = $backgroundReq->newRequest()->photos[rand(0, count($backgroundRes))]->src->original;
-
-
-
-$currentDay = date('d');
-if($_SESSION['api']) {
-
-    if($_SESSION['api']['currentDay'] != $currentDay) {
-        $_SESSION['api'] = [
-            'currentDay' => $currentDay,
-            'bgImage' => $bgImage,
-            'quoteMensage' => $quote->content,
-            'quoteAuthor' => $quote->originator->name
-        ];
-    }
-} else {
-    $_SESSION['api'] = [
-        'currentDay' => $currentDay,
-        'bgImage' => $bgImage,
-        'quoteMensage' => $quote->content,
-        'quoteAuthor' => $quote->originator->name
-    ];
-}
