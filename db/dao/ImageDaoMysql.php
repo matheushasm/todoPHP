@@ -1,5 +1,5 @@
 <?php
-require_once 'db/models/image.php';
+require_once 'db/models/Image.php';
 
 class ImageDaoMysql implements ImageDao {
     private $pdo;

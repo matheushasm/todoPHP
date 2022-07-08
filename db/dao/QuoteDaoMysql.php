@@ -1,5 +1,5 @@
 <?php
-require_once 'db/models/image.php';
+require_once 'db/models/Quote.php';
 
 class QuoteDaoMysql implements QuoteDao {
     private $pdo;

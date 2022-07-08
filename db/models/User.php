@@ -5,7 +5,7 @@ class User {
     private $name;
     private $location;
     private $ip;
-    private $key;
+    private $userKey;
 
     public function getId() {
         return $this->id;
@@ -35,10 +35,10 @@ class User {
         $this->ip = $i;
     }
 
-    public function getKey() {
+    public function getUser_key() {
         return $this->key;
     }
-    public function setKey($k) {
+    public function setUser_key($k) {
         $this->key = $k;
     }
 }
@@ -46,7 +46,7 @@ class User {
 interface UserDao {
     public function add(User $u);
     public function getAll();
-    public function getByKey($key);
+    public function getByUserKey($user_key);
     public function getByName($name);
     public function getByLocation($location);
     public function update(User $u);
