@@ -1,12 +1,19 @@
 class User {
-    constructor(name='', city, state, country, continent, ip) {
+    constructor(
+        name='', 
+        city, 
+        state, 
+        country, 
+        continent, 
+        ip
+        ) 
+    {
         this.name = name;
         this.city = city;
         this.state = state;
         this.country = country;
         this.continent = continent;
         this.ip = ip;
-
     }
 }
 class Pomodoro {
@@ -31,7 +38,11 @@ class Pomodoro {
 const c = (c) => document.querySelector(c);
 const cs = (cs) => document.querySelectorAll(cs);
 
-let user = new User(localStorage.username, localStorage.city);
+
+let user = new User(
+                    localStorage.username, 
+                    'loule'
+);
 let pomodoro = new Pomodoro(
                             localStorage.time, 
                             localStorage.shortBreak, 
@@ -41,9 +52,10 @@ let pomodoro = new Pomodoro(
                             localStorage.startBell
 );
 
-getCurrentWeader();
+getCurrentWeather();
+setUserData();
 
-if(user.name && user.city) {
+if(user.name) {
     let onBreak = false;
     let breakCount = 0;
 
@@ -343,7 +355,7 @@ if(user.name && user.city) {
     
         if(nameInput.value && locationInput.value) {
             localStorage.username = nameInput.value;
-            localStorage.location = locationInput.value;
+            localStorage.city = locationInput.value;
             document.location.reload(true);
         } else {
             alert("Please, make shure you have filled all fields info." );
@@ -352,8 +364,8 @@ if(user.name && user.city) {
 }
 
 // API WEATHER REQUEST
-async function printWeather(cityLocation) {
-    let w = await getWeather(cityLocation);
+async function printWeather(cityName) {
+    let w = await getWeather(cityName);
 
     c('#weather img').setAttribute('src', `http://openweathermap.org/img/w/${w.weather[0].icon}.png`);
     c('#weather h2').innerHTML = `${w.main.temp.toFixed()}º C`;
@@ -375,8 +387,8 @@ async function printWeather(cityLocation) {
     c('#sunrise h4').innerHTML = `${convertTimeStamp(w.sys.sunrise)}`;
     c('#sunset h4').innerHTML = `${convertTimeStamp(w.sys.sunset)}`;
 
-    getWeather = async location => {
-        let response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=87a5b62ad4b2fe6a87880936190ccd07&units=metric`);
+    async function getWeather(cityName) {
+        let response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=87a5b62ad4b2fe6a87880936190ccd07&units=metric`);
         let json = await response.json();
         return json;
     }
@@ -399,8 +411,8 @@ async function printWeather(cityLocation) {
 }
 
 //ONLOAD FUNCTIONS
-function getCurrentWeader() {
-
+    //Get and Print Weather
+function getCurrentWeather() {
     const currentWeatherInterval = setInterval(() => {
         printCurrentTime();
     }, 1);
@@ -424,18 +436,18 @@ function getCurrentWeader() {
             return `Good Evening ${user.name}`;
         }
     }
-
-
 }
 
-function setUserData() {
-    const userData = getIP();
+async function setUserData() {
+    const userData = await getIP();
 
-    getIP = async () => {
+    async function getIP() {
         let response = await fetch('https://api.db-ip.com/v2/free/self');
         let json = await response.json();
         return json;
     }
+
+    return userData;
 }
 
 // ONCLICK FUNCTIONS
