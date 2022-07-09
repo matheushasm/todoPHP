@@ -1,5 +1,19 @@
 <?php 
 require '../config.php';
+
+require '../db/dao/UserDaoMysql.php';
+require '../db/dao/QuoteDaoMysql.php';
+require '../db/dao/ImageDaoMysql.php';
+
+$userDao = new UserDaoMysql($pdo);
+$userList = $userDao->getAll();
+
+$quoteDao = new QuoteDaoMysql($pdo);
+$quoteList = $quoteDao->getAll();
+
+$imageDao = new ImageDaoMysql($pdo);
+$imageList = $imageDao->getAll();
+
 ?>
 
 <!DOCTYPE html>
@@ -22,10 +36,49 @@ require '../config.php';
         </div>
     </header>
 
-    <div>
-        
-    </div>
+    <table> 
+        <h2>Users</h2>
+        <tr>
+            <th>ID</th>
+            <th>NAME</th>
+            <th>LOCATION</th>
+            <th>IP</th>
+        </tr>
+        <?php foreach($userList as $user): ?>
+        <tr>
+            <td><?=$user->getId();?></td>
+            <td><?=$user->getName();?></td>
+            <td><?=$user->getLocation();?></td>
+            <td><?=$user->getIp();?></td>
+        </tr>
+        <?php endforeach; ?>
+    </table>
 
+    <table> 
+        <h2>Quotes</h2>
+        <tr>
+            <th>ID</th>
+            <th>CONTENT</th>
+            <th>AUTHOR</th>
+        </tr>
+        <?php foreach($quoteList as $quote): ?>
+        <tr>
+            <td><?=$quote->getId();?></td>
+            <td><?=$quote->getContent();?></td>
+            <td><?=$quote->getAuthor();?></td>
+        </tr>
+        <?php endforeach; ?>
+    </table>
+
+    <div>
+        <?php foreach($imageList as $image): ?>
+            <div class="w-32 h-32">
+                <img src="<?=$image->getUrl()?>" alt=""/>
+                <div><?=$image->getId()?></div>
+            </div>
+
+        <?php endforeach; ?>
+    </div>
 
 
 </body>

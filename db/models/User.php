@@ -36,10 +36,10 @@ class User {
     }
 
     public function getUser_key() {
-        return $this->key;
+        return $this->userKey;
     }
     public function setUser_key($k) {
-        $this->key = $k;
+        $this->userKey = $k;
     }
 }
 

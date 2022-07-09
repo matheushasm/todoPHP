@@ -1,5 +1,5 @@
 <?php 
-require_once 'db/models/User.php';
+require_once '../db/models/User.php';
 
 class UserDaoMysql implements UserDao {
     private $pdo;
@@ -32,7 +32,7 @@ class UserDaoMysql implements UserDao {
                 $u->setIp($item['ip']);
                 $u->setUser_key($item['user_key']);
 
-                $array = $u;
+                $array[] = $u;
             }
         }
         return $array;

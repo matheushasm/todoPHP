@@ -19,7 +19,7 @@ class Quote {
         $this->content = $c;
     }
 
-    public function getAuthor($a) {
+    public function getAuthor() {
         return $this->author;
     }
     public function setAuthor($a) {

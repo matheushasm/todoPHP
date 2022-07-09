@@ -1,5 +1,5 @@
 <?php
-require_once 'db/models/Quote.php';
+require_once '../db/models/Quote.php';
 
 class QuoteDaoMysql implements QuoteDao {
     private $pdo;
@@ -22,7 +22,7 @@ class QuoteDaoMysql implements QuoteDao {
         $array = [];
 
         $sql = $this->pdo->query("SELECT * FROM quotes");
-        if($sql->rouCount() > 0) {}
+        if($sql->rowCount() > 0) {}
         $data = $sql->fetchAll();
 
         foreach($data as $item) {
@@ -31,7 +31,7 @@ class QuoteDaoMysql implements QuoteDao {
             $q->setContent($item['content']);
             $q->setAuthor($item['author']);
 
-            $array = $q;
+            $array[] = $q;
         }
         return $array;
     }
