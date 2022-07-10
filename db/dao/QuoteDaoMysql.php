@@ -55,6 +55,14 @@ class QuoteDaoMysql implements QuoteDao {
         }
     }
 
+    public function update(Quote $u) {
+        $sql = $this->pdo->prepare("UPDATE quotes SET content = :content, author = :author WHERE id = :id");
+        $sql->bindValue(':content', $u->getContent());
+        $sql->bindValue(':author', $u->getAuthor());
+        $sql->bindValue(':id', $u->getId());
+        $sql->execute();
+    }
+
     public function delete($id) {
         $sql = $this->pdo->prepare("DELETE * FROM quotes WHERE id = :id");
         $sql->bindValue(':id', $id);

@@ -31,6 +31,7 @@ interface QuoteDao {
     public function add(Quote $q);
     public function getAll();
     public function getById($id);
+    public function update(Quote $u);
     public function delete($id);
 }
 ?>

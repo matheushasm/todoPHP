@@ -38,6 +38,27 @@ class UserDaoMysql implements UserDao {
         return $array;
     }
 
+    public function getById($id) {
+        $sql = $this->pdo->prepare("SELECT * FROM users WHERE id = :id");
+        $sql->bindValue(':id', $id);
+        $sql->execute();
+
+        if($sql->rowCount() > 0) {
+            $data = $sql->fetch();
+
+            $u = new User();
+            $u->setId($data['id']);
+            $u->setName($data['name']);
+            $u->setLocation($data['location']);
+            $u->setIp($data['ip']);
+            $u->setUser_key($data['user_key']);
+
+            return $u;
+        } else {
+            return false;
+        }
+    }
+
     public function getByUserKey($user_key) {
         $sql = $this->pdo->prepare("SELECT * FROM users WHERE user_key = :user_key");
         $sql->bindValue(':user_key', $user_key);
@@ -106,11 +127,13 @@ class UserDaoMysql implements UserDao {
             name = :name, 
             location = :location, 
             ip = :ip, 
-            user_key = :user_key");
+            user_key = :user_key
+            WHERE id = :id");
         $sql->bindValue(':name', $u->getName());
         $sql->bindValue(':location', $u->getLocation());
         $sql->bindValue(':ip', $u->getIp());
         $sql->bindValue(':user_key', $u->getUser_key());
+        $sql->bindValue(':id', $u->getId());
         $sql->execute();
 
         return true;

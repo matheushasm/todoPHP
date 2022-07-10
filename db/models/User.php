@@ -46,6 +46,7 @@ class User {
 interface UserDao {
     public function add(User $u);
     public function getAll();
+    public function getById($id);
     public function getByUserKey($user_key);
     public function getByName($name);
     public function getByLocation($location);
