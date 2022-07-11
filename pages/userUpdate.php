@@ -5,7 +5,7 @@ require '../db/dao/userDaoMysql.php';
 $userDao = new UserDaoMysql($pdo);
 
 $user = false;
-$id = filter_input(INPUT_GET, 'id');
+$id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_INT);
 if($id) {
     $user = $userDao->getById($id);
 }

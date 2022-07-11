@@ -4,9 +4,9 @@ require '../db/dao/QuoteDaoMysql.php';
 
 $quoteDao = new QuoteDaoMysql($pdo);
 
-$id = filter_input(INPUT_POST, 'id');
-$content = filter_input(INPUT_POST, 'content');
-$author = filter_input(INPUT_POST, 'author');
+$id = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_INT);
+$content = filter_input(INPUT_POST, 'content', FILTER_SANITIZE_STRING);
+$author = filter_input(INPUT_POST, 'author', FILTER_SANITIZE_STRING);
 
 
 if($content && $author) {

@@ -4,7 +4,7 @@ require '../db/dao/ImageDaoMysql.php';
 
 $imageDao = new ImageDaoMysql($pdo);
 
-$url = filter_input(INPUT_POST, 'url');
+$url = filter_input(INPUT_POST, 'url', FILTER_VALIDATE_URL);
 
 if($url) {
     $i = new Image();

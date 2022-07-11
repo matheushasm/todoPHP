@@ -9,7 +9,7 @@
         <p class="container m-auto text-center"><small><?='Author Bla de bla'?></small></p> 
 </footer>
 <div class="p-2 absolute bottom-2 left-2 cursor-pointer">
-    <a href="./pages/admin.php" target="_blank">...</a>
+    <a href="./pages/loginPage.php" target="_blank">...</a>
 </div>
 
 <script type="text/javascript" src="./assets/js/script.js"></script>

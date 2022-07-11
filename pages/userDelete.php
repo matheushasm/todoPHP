@@ -4,7 +4,7 @@ require '../db/dao/userDaoMysql.php';
 
 $userDao = new userDaoMysql($pdo);
 
-$id = filter_input(INPUT_GET, 'id');
+$id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_INT);
 
 if($id) {
     $userDao->delete($id);
