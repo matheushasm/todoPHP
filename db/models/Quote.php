@@ -9,21 +9,21 @@ class Quote {
         return $this->id;
     }
     public function setId($i) {
-        $this->id = $i;
+        $this->id = trim($i);
     }
 
     public function getContent() {
         return $this->content;
     }
     public function setContent($c) {
-        $this->content = $c;
+        $this->content = trim(ucfirst($c));
     }
 
     public function getAuthor() {
         return $this->author;
     }
     public function setAuthor($a) {
-        $this->author = $a;
+        $this->author = trim(ucfirst($a));
     }
 }
 

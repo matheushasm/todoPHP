@@ -11,35 +11,35 @@ class User {
         return $this->id;
     }
     public function setId($i) {
-        $this->id = $i;
+        $this->id = trim($i);
     }
 
     public function getName() {
         return $this->name;
     }
     public function setName($n) {
-        $this->name = $n;
+        $this->name = trim(ucfirst($n));
     }
 
     public function getLocation() {
         return $this->location;
     }
     public function setLocation($l) {
-        $this->location = $l;
+        $this->location = trim(ucfirst($l));
     }
 
     public function getIp() {
         return $this->ip;
     }
     public function setIp($i) {
-        $this->ip = $i;
+        $this->ip = trim($i);
     }
 
     public function getUser_key() {
         return $this->userKey;
     }
     public function setUser_key($k) {
-        $this->userKey = $k;
+        $this->userKey = trim($k);
     }
 }
 

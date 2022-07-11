@@ -10,7 +10,7 @@ class ImageDaoMysql implements ImageDao {
 
     public function add(Image $u) {
         $sql = $this->pdo->prepare("INSERT INTO images (url) VALUES (:url)");
-        $sql->bindValue(':url', $u);
+        $sql->bindValue(':url', $u->getUrl());
         $sql->execute();
 
         $u->setId($this->pdo->lastInsertId());

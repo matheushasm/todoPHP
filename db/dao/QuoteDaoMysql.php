@@ -64,7 +64,7 @@ class QuoteDaoMysql implements QuoteDao {
     }
 
     public function delete($id) {
-        $sql = $this->pdo->prepare("DELETE * FROM quotes WHERE id = :id");
+        $sql = $this->pdo->prepare("DELETE FROM quotes WHERE id = :id");
         $sql->bindValue(':id', $id);
         $sql->execute();
     }

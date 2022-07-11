@@ -73,6 +73,10 @@ class=""
             <td><?=$quote->getId();?></td>
             <td><?=$quote->getContent();?></td>
             <td><?=$quote->getAuthor();?></td>
+            <td>
+                <a href="quoteUpdate.php?id=<?=$quote->getId()?>"> [Edit] </a>
+                <a href="quoteDelete.php?id=<?=$quote->getId()?>"> [Delete] </a>
+            </td>
         </tr>
         <?php endforeach; ?>
     </table>
@@ -86,7 +90,10 @@ class=""
     <?php foreach($imageList as $image): ?>
         <div class="w-32 h-32">
             <img src="<?=$image->getUrl()?>" alt=""/>
-            <div><?=$image->getId()?></div>
+            <div>
+                <?=$image->getId()?>
+                <a href="imageDelete.php?id=<?=$image->getId()?>">X</a>
+            </div>
         </div>
 
     <?php endforeach; ?>

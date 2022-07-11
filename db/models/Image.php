@@ -8,14 +8,14 @@ class Image {
         return $this->id;
     }
     public function setId($i) {
-        $this->id = $i;
+        $this->id = trim($i);
     }
 
     public function getUrl() {
         return $this->url;
     }
     public function setUrl($u) {
-        $this->url = $u;
+        $this->url = trim($u);
     }
 }
 
