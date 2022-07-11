@@ -16,6 +16,9 @@ $quoteList = $quoteDao->getAll();
 $imageDao = new ImageDaoMysql($pdo);
 $imageList = $imageDao->getAll();
 
+// $bytes = random_bytes(8);
+// echo var_dump(bin2hex($bytes));
+
 ?>
 
 <div    

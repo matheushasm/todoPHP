@@ -22,7 +22,10 @@ if($id) {
 
     header("location: admin.php");
     exit;
-}
+} 
+
+header("location: userUpdate.php");
+exit;
 
 include 'partials/header.php';
 ?>

@@ -140,7 +140,7 @@ class UserDaoMysql implements UserDao {
     }
 
     public function delete($id) {
-        $sql = $this->pdo("DELETE FROM users WHERE id = :id");
+        $sql = $this->pdo->prepare("DELETE FROM users WHERE id = :id");
         $sql->bindValue(':id', $id);
         $sql->execute();
     }
