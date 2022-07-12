@@ -7,9 +7,9 @@
     <title>Admin To_Do</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
+<body class="w-full h-screen">
 <header 
-class="mt-4 flex justify-center"
+class="fixed inset-x-0 h-10 bg-cyan-600 text-2xl text-white font-bold"
 >
-
+Admin
 </header>

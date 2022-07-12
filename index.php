@@ -8,12 +8,12 @@ $imageDao = new ImageDaoMysql($pdo);
 $quoteDao = new QuoteDaoMysql($pdo);
 $userDao = new UserDaoMysql($pdo);
 
+$user_key = $_COOKIE['user_key'];
 $daily = date('d');
 
 $bgImage = $imageDao->getById($daily);
 $quote = $quoteDao->getById($daily);
-$user = $userDao->getById(3);
-
+$user = $userDao->getByUserKey($user_key);
 ?>
 
 <!DOCTYPE html>
@@ -36,22 +36,29 @@ style="background-image: url(<?=$bgImage->getUrl()?>); text-shadow: 1px 1px #000
 class="font-sans text-lg text-white bg-slate-900 select-none
         bg-neutral-900 bg-cover bg-center"
 >
-    <form id="userDataForm"
-    method="POST" action="userData.php">
-        <input type="hidden" />
-        <input type="hidden" />
-        <input type="hidden" />
-        <input type="hidden" />
+
+
+    <form name="userDataForm" method="POST" action="saveUserData.php">
+        <input type="hidden" name="name" value="<?=$user->getName() ?: ''?>"/>
+        <input type="hidden" name="location" value="<?=$user->getLocation() ?: ''?>"/>
+        <input type="hidden" name="ip" />
     </form>
+    <?php 
+        if(!isset($_COOKIE['user_key'])) {
+            echo '<script type="text/javascript" src="./assets/js/userDataSave.js"></script>';
+            exit;
+        }
+    ?>
+
 
     <header class="fixed inset-x-0 p-4">
         <div class="flex justify-between ">
-            <div>
+            <div class="">
                 <input type="text" name="search" />
                 <input type="submit" value="Search" />
             </div>
 
-            <div id="weather" class="flex flex-col items-center justify-center rounded hidden hover:shadow-xl">
+            <div id="weather" class="flex flex-col items-center justify-center bg-slate-800/5 rounded hidden hover:shadow-xl">
                 <div class="flex p-2">
                     <img class="w-12 h-12 mr-2"/>
                     <div class="">
@@ -100,12 +107,16 @@ class="font-sans text-lg text-white bg-slate-900 select-none
             </div>
         </div>  
     </header>
+
+
     <main class="h-screen container m-auto flex flex-col justify-center items-center">
         <div class="p-6 flex flex-col items-center rounded hover:shadow-xl">
             <div id="clock">
                 <h2 class="p-4 text-9xl font-bold"></h2>
-                <h4 class="mt-20 mb-20 text-4xl text-center"></h4>
+                <h4 class="mt-20 mb-20 text-4xl text-center"><span></span><?=$user->getName()?></h4>
             </div>
+
+
             <div id="pomodoroArea"
             class="hidden">
                 <h2 class="p-4 text-9xl font-bold"></h2>
@@ -125,6 +136,8 @@ class="font-sans text-lg text-white bg-slate-900 select-none
                     </button>
                 </div>
             </div>
+
+
             <div id="timerArea"
             class="hidden">
                 <h2 class="p-4 text-8xl font-bold">00:00:00</h2>
@@ -153,19 +166,16 @@ class="font-sans text-lg text-white bg-slate-900 select-none
                         <div id="handleClockButton" class="p-2 text-lg hover:bg-orange-400 hover:text-white ease-in duration-300">Clock</div>
                         <div id="handlePomodoroButton" class="p-2 text-lg  hover:bg-orange-400 hover:text-white ease-in duration-300">Pomodoro</div>
                         <div id="handleTimerButton" class="p-2 text-lg  hover:bg-orange-400 hover:text-white ease-in duration-300">Timer</div>
-                        <hr/>
-                        <div class="w-full p-1 text-center rounded bg-red-500/70 hover:bg-red-500/90">x</div>
                     </div>
                 </div>
                 <div id="configButtonArea" class="ml-4 p-4 absolute left-[68%] top-[60%] cursor-pointer z-10 hidden hover:rounded hover:bg-slate-900/20">
                     <i class="gg-more"></i>
                     <div id="userConfigurationArea" class="mt-2 rounded hover:shadow-xl hidden">
-                        <div id="handleSetUserButton" class="p-2 text-lg  hover:bg-orange-400 hover:text-white ease-in duration-300">Change User/Location</div>
+                        <div id="handleSetUserButton" class="p-2 text-lg  hover:bg-orange-400 hover:text-white ease-in duration-300">Set Name</div>
                         <div id="handleSetPomodoroButton" class="p-2 text-lg  hover:bg-orange-400 hover:text-white ease-in duration-300">Set Pomodoro</div>
-                        <hr/>
-                        <div class="w-full p-1 text-center rounded bg-red-500/70 hover:bg-red-500/90">x</div>
                     </div>
                 </div>
+
 
                 <div id="pomodoroConfigurationArea"
                 class="absolute inset-y-0 inset-x-0 bg-slate-900/70 z-10 opacity-0 hidden">
@@ -270,15 +280,17 @@ class="font-sans text-lg text-white bg-slate-900 select-none
                 </div>
             </div>  
 
+
             <div id="unlogged" class="hidden">
-                <form>
-                    <input id="userName" class="text-black" type="text" placeholder="What is your name?"/>
-                    <input id="userLocation" class="text-black" type="text" placeholder="What is your City?"/>
+                <form name="userNameSave" method="POST" action="saveUserName.php">
+                    <input name="name" class="text-black" type="text" placeholder="What is your name?"/>
                     <input type="submit" value="Save" class="p-1 border bg-slate-900/40 rounded hover:bg-slate-900/60 ease-in duration-300" />
                 </form>
             </div>      
         </div>
     </main>
+
+
     <footer class="fixed bottom-2 inset-x-0 h-18
         flex flex-col items-center
         text-xl ease-in duration-300 
@@ -290,8 +302,9 @@ class="font-sans text-lg text-white bg-slate-900 select-none
         <a href="./pages/loginPage.php" target="_blank">...</a>
     </div>
 
+
     <script type="text/javascript" src="./assets/js/config.js"></script>
-    <script type="text/javascript" src="./assets/js/userData.js"></script>
+    <script type="text/javascript" src="./assets/js/PomodoroObject.js"></script>
     <script type="text/javascript" src="./assets/js/script.js"></script>
 </body>
 </html>

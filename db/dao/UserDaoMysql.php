@@ -14,6 +14,10 @@ class UserDaoMysql implements UserDao {
         $sql->bindValue(':location', $u->getLocation());
         $sql->bindValue(':ip', $u->getIp());
         $sql->bindValue('user_key', $u->getUser_key());
+        $sql->execute();
+
+        $u->setId($this->pdo->lastInsertId());
+        return $u;
     }
 
     public function getAll() {

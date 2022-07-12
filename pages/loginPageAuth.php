@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once '../config.php';
 require_once '../db/dao/AdminDaoMysql.php';
 
@@ -14,6 +15,7 @@ if($username && $password) {
     if($admin) {
         if($password === $admin->getPassword()) {
             $adminDao->saveLastLog($admin->getId());
+            $_SESSION['admin_key'] = true;
             header("location: admin.php");
             exit;
         }

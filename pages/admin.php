@@ -1,4 +1,5 @@
 <?php 
+session_start();
 require_once '../config.php';
 
 require_once '../db/dao/UserDaoMysql.php';
@@ -16,13 +17,13 @@ $quoteList = $quoteDao->getAll();
 $imageDao = new ImageDaoMysql($pdo);
 $imageList = $imageDao->getAll();
 
-// $bytes = random_bytes(8);
-// echo var_dump(bin2hex($bytes));
-
+if(!isset($_SESSION['admin_key'])) {
+    header("location: loginPage.php");
+    exit;
+}
 ?>
-
 <div    
-class="mt-4 flex justify-center"
+class="flex justify-center"
 >
     <div class="flex rounded overflow-hidden">
         <div onclick="showUsers()" id="handleUsersButton" class="p-2 px-12 bg-purple-900/60">Users</div>
@@ -36,6 +37,7 @@ class=""
 >
     <h2>Users</h2>
     <table> 
+        <span>Total: <?=count($userList)?> users</span>
         <tr>
             <th>ID</th>
             <th>NAME</th>
@@ -63,6 +65,7 @@ class=""
     <h2>Quotes</h2>
     <a href="newQuote.php">Add New Quote</a>
     <table> 
+        <span>Total: <?=count($quoteList)?> quotes</span>
         <tr>
             <th>ID</th>
             <th>CONTENT</th>
@@ -86,7 +89,9 @@ class=""
 class=""
 >
     <h2>Images</h2>
+    <span>Total: <?=count($imageList)?> images</span>
     <a href="newImage.php">Add new Image</a>
+
     <?php foreach($imageList as $image): ?>
         <div class="w-32 h-32">
             <img src="<?=$image->getUrl()?>" alt=""/>

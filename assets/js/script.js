@@ -1,61 +1,23 @@
-class User {
-    constructor(
-        name='', 
-        city, 
-        state, 
-        country, 
-        continent, 
-        ip
-        ) 
-    {
-        this.name = name;
-        this.city = city;
-        this.state = state;
-        this.country = country;
-        this.continent = continent;
-        this.ip = ip;
-    }
-}
-class Pomodoro {
-    constructor(
-        time=25, 
-        shortBreak=5, 
-        longBreak=15, 
-        longBreakAfter=4, 
-        stopBell=1, 
-        startBell=1
-        ) 
-    {
-        this.time = time;
-        this.shortBreak = shortBreak;
-        this.longBreak = longBreak;
-        this.longBreakAfter = longBreakAfter;
-        this.stopBell = stopBell;
-        this.startBell = startBell;
-    }
-}
-
-
-let user = new User(
-                    localStorage.username, 
-                    'loule'
-);
 let pomodoro = new Pomodoro(
-                            localStorage.time, 
-                            localStorage.shortBreak, 
-                            localStorage.longBreak, 
-                            localStorage.longBreakAfter, 
-                            localStorage.stopBell, 
-                            localStorage.startBell
+    localStorage.time, 
+    localStorage.shortBreak, 
+    localStorage.longBreak, 
+    localStorage.longBreakAfter, 
+    localStorage.stopBell, 
+    localStorage.startBell
 );
 
 getCurrentWeather();
 
-if(user.name) {
+const userName = c("form[name='userDataForm'] input[name='name']").value;
+const fullLocation = c("form[name='userDataForm'] input[name='location']").value;
+const userLocation = fullLocation.split(',');
+
+if(userName) {
     let onBreak = false;
     let breakCount = 0;
 
-    printWeather(user.city);
+    printWeather(userLocation[0]);
     showLoggedContent();
 
     c('main').addEventListener('mouseover', showConfigButtons);
@@ -66,8 +28,12 @@ if(user.name) {
     c('#handleTimerButton').addEventListener('click', showTimer);
 
     c('#timerButtonArea').addEventListener('click', showTimerConfigArea);
+    c('#timerConfigArea').addEventListener('mouseleave', showTimerConfigArea);
     c('#configButtonArea').addEventListener('click', showConfigArea);
-    c('#handleSetUserButton').addEventListener('click', resetUser);
+    c('#userConfigurationArea').addEventListener('mouseleave', showConfigArea);
+
+    //SetUserName on data base
+    c('#handleSetUserButton').addEventListener('click', setUserName);
 
     c('#handleSetPomodoroButton').addEventListener('click', openPomodoroConfigArea);
     c('#handlePomodoroConfigClose').addEventListener('click', closePomodoroConfigArea);
@@ -143,11 +109,22 @@ if(user.name) {
             c('#userConfigurationArea').style.display = 'block';
         }
     }
-    function resetUser() {
-        localStorage.removeItem('username');
-        localStorage.removeItem('location');
-        sessionStorage.location = 'clock';
-        window.location.reload(true);
+    function closeTimerConfigArea() {
+        if(c('#timerConfigArea').style.display == 'block') {
+            c('#timerConfigArea').style.display = 'none';
+        } else {
+            c('#timerConfigArea').style.display = 'block';
+        }
+    }
+    function closeConfigArea() {
+        if(c('#userConfigurationArea').style.display == 'block') {
+            c('#userConfigurationArea').style.display = 'none';
+        } else {
+            c('#userConfigurationArea').style.display = 'block';
+        }
+    }
+    function setUserName() {
+        c('#unlogged').style.display = 'block';
     }
     function openPomodoroConfigArea() {
         c('#pomodoroConfigurationArea').style.display = 'block';
@@ -230,8 +207,8 @@ if(user.name) {
         c('#visibility h4').innerHTML = `${w.visibility.toFixed()} m`;
         c('#humity h4').innerHTML = `${w.main.humidity}%`;
         c('#wind h4').innerHTML = `${w.wind.speed.toFixed()} Km/h`;
-        c('#sunrise h4').innerHTML = `${convertTimeStamp(w.sys.sunrise)}`;
-        c('#sunset h4').innerHTML = `${convertTimeStamp(w.sys.sunset)}`;
+        c('#sunrise h4').innerHTML = `${convertTimeStamp(w.sys.sunrise)} h`;
+        c('#sunset h4').innerHTML = `${convertTimeStamp(w.sys.sunset)} h`;
 
         async function getWeather(cityName) {
             let response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=87a5b62ad4b2fe6a87880936190ccd07&units=metric`);
@@ -261,7 +238,7 @@ if(user.name) {
         c('#handlePomodoroPlay').style.display = 'none';
         // c('#handlePomodoroPause').style.display = 'block';
         c('#handlePomodoroStop').style.display = 'block';
-
+    
         if(!onBreak) {
             c('main #pomodoroArea h2').style.color = 'white';
             pomodoroRun(pomodoro.stopBell);
@@ -269,7 +246,7 @@ if(user.name) {
             c('main #pomodoroArea h2').style.color = 'yellow';
             pomodoroBreak(breakCount, pomodoro.startBell);
         }
-
+    
         /*
             THE SAME BUTTON PLAY RUN PLAY & PAUSE FUNCTIONS
             WHEN FINISH PLAY, START PAUSE MODE
@@ -277,7 +254,7 @@ if(user.name) {
         function pomodoroRun() {
             let minutes = pomodoro.time -1;
             let seconds =  60;
-
+    
             pomodoroCount(minutes, seconds, pomodoro.stopBell);
             onBreak = true;
             checkNextStep();
@@ -390,23 +367,7 @@ if(user.name) {
     }
 } else {
     c('#unlogged').style.display = 'block';
-    c('#unlogged input[type=submit]').addEventListener('click', saveUser);
-
-    function saveUser() {
-        const nameInput = c('#unlogged #userName');
-        const locationInput = c('#unlogged #userLocation');
-    
-        if(nameInput.value && locationInput.value) {
-            localStorage.username = nameInput.value;
-            localStorage.city = locationInput.value;
-            document.location.reload(true);
-        } else {
-            alert("Please, make shure you have filled all fields info." );
-        }
-    }
 }
-
-
 
 //ONLOAD FUNCTIONS
 function getCurrentWeather() {
@@ -421,25 +382,22 @@ function getCurrentWeather() {
         let m = time.getMinutes();
 
         c('main #clock h2').innerHTML = `${ (h<10)? `0${h}` : h }:${ (m<10)? `0${m}` : m }`;
-        c('main #clock h4').innerHTML = printCurrentDayState(h);
+        c('main #clock h4 span').innerHTML = printCurrentDayState(h);
     }
     function printCurrentDayState(h) {
         if(h > 5 && h < 12) {
-            return `Good Morning ${user.name}`;
+            return 'Good Morning ';
         } else if(h > 11 && h < 18) {
-            return `Good Afternoon ${user.name}`;
+            return 'Good Afternoon ';
         } else if(h > 17 && h < 24) {
-            return `Good Evening ${user.name ? user.name : ''}`;
+            return 'Good Evening ';
         } else if(h >= 0 && h < 5) {
-            return `Good Evening ${user.name}`;
+            return 'Good Evening ';
         }
     }
 }
 
-
 // ONCLICK FUNCTIONS
-
-
 function checkboxSelected(e, classItem) {
     cs(classItem).forEach( item => {
         if(item.checked) {
