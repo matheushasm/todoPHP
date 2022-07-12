@@ -1,10 +1,10 @@
 <?php
-require '../config.php';
-require '../db/dao/userDaoMysql.php';
+require_once '../config.php';
+require_once '../db/dao/userDaoMysql.php';
 
 $userDao = new UserDaoMysql($pdo);
 
-$id = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_INT);
+$id = filter_input(INPUT_POST, 'id');
 $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING);
 $location = filter_input(INPUT_POST, 'location', FILTER_SANITIZE_STRING);
 $ip = filter_input(INPUT_POST, 'ip', FILTER_SANITIZE_IP);

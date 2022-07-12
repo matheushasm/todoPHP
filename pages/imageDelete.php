@@ -1,6 +1,6 @@
 <?php
-require '../config.php';
-require '../db/dao/ImageDaoMysql.php';
+require_once '../config.php';
+require_once '../db/dao/ImageDaoMysql.php';
 
 $imageDao = new ImageDaoMysql($pdo);
 

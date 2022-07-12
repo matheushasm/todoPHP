@@ -1,6 +1,6 @@
 <?php
-require '../config.php';
-require '../db/dao/QuoteDaoMysql.php';
+require_once '../config.php';
+require_once '../db/dao/QuoteDaoMysql.php';
 
 $quoteDao = new QuoteDaoMysql($pdo);
 

@@ -35,8 +35,6 @@ class Pomodoro {
     }
 }
 
-const c = (c) => document.querySelector(c);
-const cs = (cs) => document.querySelectorAll(cs);
 
 let user = new User(
                     localStorage.username, 
@@ -52,7 +50,6 @@ let pomodoro = new Pomodoro(
 );
 
 getCurrentWeather();
-setUserData();
 
 if(user.name) {
     let onBreak = false;
@@ -438,18 +435,11 @@ function getCurrentWeather() {
         }
     }
 }
-async function setUserData() {
-    const userData = await getIP();
 
-    async function getIP() {
-        let response = await fetch('https://api.db-ip.com/v2/free/self');
-        let json = await response.json();
-        return json;
-    }
-    return userData;
-}
 
 // ONCLICK FUNCTIONS
+
+
 function checkboxSelected(e, classItem) {
     cs(classItem).forEach( item => {
         if(item.checked) {

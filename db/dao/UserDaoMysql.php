@@ -1,5 +1,5 @@
 <?php 
-require_once '../db/models/User.php';
+require_once __DIR__ . '../../models/User.php';
 
 class UserDaoMysql implements UserDao {
     private $pdo;

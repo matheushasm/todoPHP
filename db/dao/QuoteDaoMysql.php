@@ -1,5 +1,5 @@
 <?php
-require_once '../db/models/Quote.php';
+require_once __DIR__ . '../../models/Quote.php';
 
 class QuoteDaoMysql implements QuoteDao {
     private $pdo;

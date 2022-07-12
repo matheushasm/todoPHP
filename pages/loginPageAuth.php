@@ -1,6 +1,6 @@
 <?php
-require '../config.php';
-require '../db/dao/AdminDaoMysql.php';
+require_once '../config.php';
+require_once '../db/dao/AdminDaoMysql.php';
 
 $adminDao = new AdminDaoMysql($pdo);
 $admin = false;
@@ -13,6 +13,7 @@ if($username && $password) {
     $admin = $adminDao->getByUsername($username);
     if($admin) {
         if($password === $admin->getPassword()) {
+            $adminDao->saveLastLog($admin->getId());
             header("location: admin.php");
             exit;
         }

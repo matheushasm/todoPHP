@@ -1,9 +1,5 @@
 <?php
-include 'partials/header.php';
-
-$user = getenv('USER_NAME');
-$pass = getenv('PASS_WORD');
-echo $user.$pass;
+include_once 'partials/header.php';
 ?>
 
 <div>
@@ -16,4 +12,4 @@ echo $user.$pass;
     </div>
 </div>
 
-<?php include 'partials/footer.php' ?>
+<?php include_once 'partials/footer.php' ?>

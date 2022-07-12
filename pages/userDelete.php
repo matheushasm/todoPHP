@@ -1,10 +1,10 @@
 <?php
-require '../config.php';
-require '../db/dao/userDaoMysql.php';
+require_once '../config.php';
+require_once '../db/dao/userDaoMysql.php';
 
 $userDao = new userDaoMysql($pdo);
 
-$id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_INT);
+$id = filter_input(INPUT_GET, 'id');
 
 if($id) {
     $userDao->delete($id);

@@ -45,4 +45,5 @@ class Admin {
 
 interface AdminDao {
     public function getByUsername(Admin $u);
+    public function saveLastLog($id);
 }

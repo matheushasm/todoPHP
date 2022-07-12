@@ -1,5 +1,5 @@
 <?php
-include 'partials/header.php';
+include_once 'partials/header.php';
 ?>
 
 <h1>New Image</h1>
@@ -14,5 +14,5 @@ class="flex flex-col">
 </form>
 
 <?php
-include 'partials/footer.php';
+include_once 'partials/footer.php';
 ?>

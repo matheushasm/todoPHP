@@ -1,11 +1,11 @@
 <?php
-require '../config.php';
-require '../db/dao/userDaoMysql.php';
+require_once '../config.php';
+require_once '../db/dao/userDaoMysql.php';
 
 $userDao = new UserDaoMysql($pdo);
 
 $user = false;
-$id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_INT);
+$id = filter_input(INPUT_GET, 'id');
 if($id) {
     $user = $userDao->getById($id);
 }

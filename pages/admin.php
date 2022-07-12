@@ -1,11 +1,11 @@
 <?php 
-require '../config.php';
+require_once '../config.php';
 
-require '../db/dao/UserDaoMysql.php';
-require '../db/dao/QuoteDaoMysql.php';
-require '../db/dao/ImageDaoMysql.php';
+require_once '../db/dao/UserDaoMysql.php';
+require_once '../db/dao/QuoteDaoMysql.php';
+require_once '../db/dao/ImageDaoMysql.php';
 
-include 'partials/header.php';
+include_once 'partials/header.php';
 
 $userDao = new UserDaoMysql($pdo);
 $userList = $userDao->getAll();
@@ -114,4 +114,4 @@ class=""
     }
 </script>
 
-<?php include 'partials/footer.php';
+<?php include_once 'partials/footer.php';

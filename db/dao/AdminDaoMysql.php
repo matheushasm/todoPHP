@@ -28,4 +28,11 @@ class AdminDaoMysql implements AdminDao {
             return false;
         }
     }
+
+    public function saveLastLog($id) {
+        $sql = $this->pdo->prepare("UPDATE admin SET log = :log WHERE id = :id ");
+        $sql->bindValue(':id', $id);
+        $sql->bindValue(':log', date("l jS \of F Y h:i:s A"));
+        $sql->execute();
+    }
 }

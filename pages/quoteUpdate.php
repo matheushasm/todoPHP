@@ -1,11 +1,11 @@
 <?php
-require '../config.php';
-require '../db/dao/QuoteDaoMysql.php';
+require_once '../config.php';
+require_once '../db/dao/QuoteDaoMysql.php';
 
 $quoteDao = new QuoteDaoMysql($pdo);
 $quote = false;
 
-$id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_INT);
+$id = filter_input(INPUT_GET, 'id');
 
 if($id) {
     $quote = $quoteDao->getById($id);
@@ -15,7 +15,7 @@ if($quote === false) {
     exit;
 }
 
-include 'partials/header.php';
+include_once 'partials/header.php';
 ?>
 
 <h1>Edit Quote</h1>
@@ -36,4 +36,4 @@ class="flex flex-col">
     <input type="submit" value="save"/>
 </form>
 
-<?php include 'partials/footer.php'; ?>
+<?php include_once 'partials/footer.php'; ?>
