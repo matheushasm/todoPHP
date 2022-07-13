@@ -9,11 +9,11 @@ $quoteDao = new QuoteDaoMysql($pdo);
 $userDao = new UserDaoMysql($pdo);
 
 $user_key = $_COOKIE['user_key'];
-$daily = date('d');
 
-$bgImage = $imageDao->getById($daily);
-$quote = $quoteDao->getById($daily);
+$bgImage = $imageDao->getAll();
+$quote = $quoteDao->getAll();
 $user = $userDao->getByUserKey($user_key);
+
 ?>
 
 <!DOCTYPE html>
@@ -32,7 +32,7 @@ $user = $userDao->getByUserKey($user_key);
 
 </head>
 <body
-style="background-image: url(<?=$bgImage->getUrl()?>); text-shadow: 1px 1px #000;"
+style="background-image: url(<?=$bgImage[date('d')]->getUrl()?>); text-shadow: 1px 1px #000;"
 class="font-sans text-lg text-white bg-slate-900 select-none
         bg-neutral-900 bg-cover bg-center"
 >
@@ -295,8 +295,8 @@ class="font-sans text-lg text-white bg-slate-900 select-none
         flex flex-col items-center
         text-xl ease-in duration-300 
         overflow-hidden">
-        <p class="container m-auto text-center break-normal"><?=$quote->getContent()?></p>
-        <p class="container m-auto text-center"><small><?=$quote->getAuthor()?></small></p> 
+        <p class="container m-auto text-center break-normal"><?=$quote[date('d')]->getContent()?></p>
+        <p class="container m-auto text-center"><small><?=$quote[date('d')]->getAuthor()?></small></p> 
     </footer>
     <div class="p-2 absolute bottom-2 left-2 cursor-pointer">
         <a href="./pages/loginPage.php" target="_blank">...</a>

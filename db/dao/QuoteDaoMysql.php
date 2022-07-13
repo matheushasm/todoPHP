@@ -22,16 +22,17 @@ class QuoteDaoMysql implements QuoteDao {
         $array = [];
 
         $sql = $this->pdo->query("SELECT * FROM quotes");
-        if($sql->rowCount() > 0) {}
-        $data = $sql->fetchAll();
+        if($sql->rowCount() > 0) {
+            $data = $sql->fetchAll();
 
-        foreach($data as $item) {
-            $q = new Quote();
-            $q->setId($item['id']);
-            $q->setContent($item['content']);
-            $q->setAuthor($item['author']);
+            foreach($data as $item) {
+                $q = new Quote();
+                $q->setId($item['id']);
+                $q->setContent($item['content']);
+                $q->setAuthor($item['author']);
 
-            $array[] = $q;
+                $array[] = $q;
+            }
         }
         return $array;
     }
