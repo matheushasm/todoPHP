@@ -15,7 +15,7 @@ include_once 'partials/header.php';
             type="text" name="username" placeholder="Username"/>
             <input class="p-4 mb-2 bg-transparent text-lg text-white  outline-none"
             type="password" name="password" placeholder="Password"/>
-            <input class="w-2/5 h-12 p-4 m-auto mb-2 bg-cyan-600 text-lg text-white text-center leading-3 rounded"
+            <input class="w-2/5 h-12 p-4 m-auto mb-2 bg-cyan-600 text-lg text-white text-center leading-3 rounded hover:bg-cyan-600/40 ease-in duration-300 "
             type="submit" value="Login"/>
         </div>
     </div>

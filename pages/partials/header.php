@@ -9,7 +9,7 @@
 </head>
 <body class="w-full h-screen">
 <header 
-class="fixed inset-x-0 h-10 bg-cyan-600 text-2xl text-white font-bold"
+class="fixed inset-x-0 p-2 bg-cyan-600 text-2xl text-center text-white font-bold"
 >
 Admin
 </header>
