@@ -15,20 +15,18 @@ const userLocation = fullLocation.split(','); // Arry 0 => City, 1 => State, 2 =
 
 let onBreak = false;
 let breakCount = 0;
-let todoTasks = localStorage.tasks;
 
 printWeather(userLocation[0]);
-showLoggedContent();
-showTasks(todoTasks);
+showTasks(localStorage.tasks);
 
 if(!userName) {
     c('#unlogged').style.display = 'block';
     c('#todoMainFocus').display = 'none';
 }
 
-c('main').addEventListener('mouseover', showConfigButtons);
-c('main').addEventListener('mouseleave', hiddenConfigButtons);
-c("#inputTasks input[type='submit']").addEventListener('click', saveTodoFocus);
+
+c("form[name='inputTasks']").addEventListener('submit', saveTodoFocus);
+cs('#todoTaskArea .deleteTask').forEach(item => item.addEventListener('click', deleteThisTask));
 
 c('#handleClockButton').addEventListener('click', showClock);
 c('#handlePomodoroButton').addEventListener('click', showPomodoro);
@@ -67,12 +65,6 @@ switch(sessionStorage.location) {
 }
 
 // EVENT FUNCTIOS
-function showLoggedContent() {
-    c('#logged').style.display = 'block';
-    c('#weather').style.display = 'block';
-}
-
-
 function showClock() {
     c('main #clock').style.display = 'block';
     c('main #timerArea').style.display = 'none';
@@ -95,14 +87,6 @@ function showTimer() {
     c('main #clock').style.display = 'none';
     c('main #pomodoroArea').style.display = 'none';
     sessionStorage.location = 'timer';
-}
-function showConfigButtons() {
-    c('#timerButtonArea').style.display = 'block';
-    c('#configButtonArea').style.display = 'block';
-}
-function hiddenConfigButtons() {
-    c('#timerButtonArea').style.display = 'none';
-    c('#configButtonArea').style.display = 'none';
 }
 function showTimerConfigArea() {
     if(c('#timerConfigArea').style.display == 'block') {
@@ -138,6 +122,7 @@ function setUserName() {
     c('#unlogged').style.display = 'block';
 }
 
+//      TO_DO TASKS FUNCTIONS
 function showTasks(t) {
     taskArea = c('#todoTaskArea');
     if(t) {
@@ -160,7 +145,7 @@ function showTasks(t) {
     }
 }
 function saveTodoFocus() {
-    let inputTask = c("#inputTasks input[type='text']").value;
+    let inputTask = c("form[name='inputTasks'] input[type='text']").value;
 
     if(inputTask) {
         if(localStorage.tasks) {
@@ -169,6 +154,17 @@ function saveTodoFocus() {
             localStorage.tasks = inputTask;
         }
     }
+    window.location.reload(true);
+}
+function deleteThisTask(e) {
+    let tasks = localStorage.tasks.split(',');
+    let taskList = tasks.filter((item, index) => {
+        if(index != e.target.id) {
+            return item;
+        }
+    })
+
+    localStorage.tasks = taskList.join();
     window.location.reload(true);
 }
 
