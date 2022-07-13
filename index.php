@@ -13,7 +13,6 @@ $user_key = $_COOKIE['user_key'];
 $bgImage = $imageDao->getAll();
 $quote = $quoteDao->getAll();
 $user = $userDao->getByUserKey($user_key);
-
 ?>
 
 <!DOCTYPE html>
@@ -160,6 +159,7 @@ class="font-sans text-lg text-white bg-slate-900 select-none
 
 
             <div id="logged" class="hidden" >
+
                 <div id="timerButtonArea" class="p-4 absolute left-[28%] top-[60%] cursor-pointer z-10 hidden hover:rounded hover:bg-slate-900/20">
                     <i class="gg-timer"></i>
                     <div id="timerConfigArea" class="mt-2 rounded hover:shadow-xl hidden">
@@ -175,8 +175,9 @@ class="font-sans text-lg text-white bg-slate-900 select-none
                         <div id="handleSetPomodoroButton" class="p-2 text-lg  hover:bg-orange-400 hover:text-white ease-in duration-300">Set Pomodoro</div>
                     </div>
                 </div>
-                <div id="todoMainFocus">
-                    <input type="text" name="mainfocus" placeholder="What is your main focus for today?"/>
+                <div id="todoTaskArea" class="text-white"></div>
+                <div id="inputTasks">
+                    <input type="text" placeholder="What would you like to be focused today?"/>
                     <input type="submit" value="Save" />
                 </div>
 

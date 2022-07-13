@@ -11,17 +11,24 @@ getCurrentWeather();
 
 const userName = c("form[name='userDataForm'] input[name='name']").value;
 const fullLocation = c("form[name='userDataForm'] input[name='location']").value;
-const userLocation = fullLocation.split(',');
-
+const userLocation = fullLocation.split(','); // Arry 0 => City, 1 => State, 2 => Country, 3 => Continet
 
 let onBreak = false;
 let breakCount = 0;
+let todoTasks = localStorage.tasks;
 
 printWeather(userLocation[0]);
 showLoggedContent();
+showTasks(todoTasks);
+
+if(!userName) {
+    c('#unlogged').style.display = 'block';
+    c('#todoMainFocus').display = 'none';
+}
 
 c('main').addEventListener('mouseover', showConfigButtons);
 c('main').addEventListener('mouseleave', hiddenConfigButtons);
+c("#inputTasks input[type='submit']").addEventListener('click', saveTodoFocus);
 
 c('#handleClockButton').addEventListener('click', showClock);
 c('#handlePomodoroButton').addEventListener('click', showPomodoro);
@@ -64,6 +71,8 @@ function showLoggedContent() {
     c('#logged').style.display = 'block';
     c('#weather').style.display = 'block';
 }
+
+
 function showClock() {
     c('main #clock').style.display = 'block';
     c('main #timerArea').style.display = 'none';
@@ -123,9 +132,46 @@ function closeConfigArea() {
         c('#userConfigurationArea').style.display = 'block';
     }
 }
+
 function setUserName() {
+    c('#todoMainFocus').style.display = 'none';
     c('#unlogged').style.display = 'block';
 }
+
+function showTasks(t) {
+    taskArea = c('#todoTaskArea');
+    if(t) {
+        taskList = t.split(',');
+
+        let nodes = taskList.map( (task, index) => {
+            let li = document.createElement('li');
+            let bt = document.createElement('button');
+    
+            bt.classList.add('deleteTask');
+            bt.id = index;
+            bt.textContent = 'x';
+    
+            li.textContent = task;
+            li.appendChild(bt);
+    
+            return li;
+        })
+        taskArea.append(...nodes);
+    }
+}
+function saveTodoFocus() {
+    let inputTask = c("#inputTasks input[type='text']").value;
+
+    if(inputTask) {
+        if(localStorage.tasks) {
+            localStorage.tasks = `${localStorage.tasks}, ${inputTask}`; 
+        } else {
+            localStorage.tasks = inputTask;
+        }
+    }
+    window.location.reload(true);
+}
+
 function openPomodoroConfigArea() {
     c('#pomodoroConfigurationArea').style.display = 'block';
     c('#pomodoroConfigurationArea').style.opacity = '1';
@@ -185,8 +231,6 @@ function handleSavePomodoroConfig() {
         }
     }
 }
-
-
 
 //  POMODORO FUNCTIONS
 function pomodoroStart() {
@@ -319,9 +363,6 @@ function timerCount(minutes, seconds, mileseconds) {
                                             ${ (seconds < 10)? `0${seconds}` : seconds }:
                                             ${ (mileseconds < 10)? `0${mileseconds}` : mileseconds }`;
     }, 100);
-}
-if(!userName) {
-    c('#unlogged').style.display = 'block';
 }
 
 //ONLOAD FUNCTIONS
