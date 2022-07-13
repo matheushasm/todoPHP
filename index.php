@@ -30,21 +30,38 @@ $user = $userDao->getByUserKey($user_key);
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>  
 
     <style>
+        body {
+            background-image: url(<?=$bgImage[date('d')]->getUrl()?>);
+            text-shadow: 1px 1px #000;
+        }
+
         #todoTaskArea li {
             display: flex;
-            justify-content: space-between;
+            justify-content: space-around;
+            padding: 5px;
+            background-color: rgba(71, 70, 71, .3);
+            transition: ease all .3s;
         }
-        #todoTaskArea li button {
+        #todoTaskArea li:hover {
+            background-color: rgba(71, 70, 71, .7);
+        }
 
+        #todoTaskArea li button {
+            width: 30px;
+            height: 30px;
+            margin-left: 5px;
+            padding: 2px;
+            background-color: rgba(255, 0, 0, .3);
+            border-radius: 5px;
+            transition: ease all .3s;
+        }
+        #todoTaskArea li button:hover {
+            background-color: rgba(255, 0, 0, .7);
         }
     </style>
 
 </head>
-<body style="background-image: url(<?=$bgImage[date('d')]->getUrl()?>); text-shadow: 1px 1px #000;"
-    class="font-sans text-lg text-white bg-slate-900 select-none
-            bg-neutral-900 bg-cover bg-center"
->
-
+<body class="font-sans text-lg text-white bg-slate-900 select-none bg-neutral-900 bg-cover bg-center">
     <form name="userDataForm" method="POST" action="saveUserData.php">
         <input type="hidden" name="name" value="<?=$user->getName() ?: ''?>"/>
         <input type="hidden" name="location" value="<?=$user->getLocation() ?: ''?>"/>
@@ -74,18 +91,21 @@ $user = $userDao->getByUserKey($user_key);
                     </div>
                 </div>
             </div>
-            <div id="fullWeather" class="bg-slate-900/80 rounded-xl overflow-hidden opacity-0 hidden ease-in duration-300">
+
+            <div id="fullWeather" class="bg-slate-900/80 rounded-xl overflow-hidden opacity-0 hidden">
                 <div id="fullWeatherLocation" class="p-2 text-xl font-bold bg-gray-700">Faro, Portugal</div>
+
                 <div id="fullWeatherMain" class="p-2 flex justify-between">
                     <h4 class="text-5xl font-bold">20º C</h4>
                     <img/>
                 </div>
+
                 <div id="fullWeaderMinMax" class="p-2">
                     <h2 class="mb-2 text-2xl text-center">Cloud</h2>
                     <h4 class="text-sm font-bold text-center" >min/max</h4>
                 </div>
 
-                <div class="p-4 grid gap-4 grid-cols-2">
+                <div class="p-4 grid grid-cols-3 gap-4">
                     <div id="termal" class="bg-blue-500/50 overflow-hidden rounded-xl">
                         <div class="p-2 text-sm font-bold bg-gray-700 text-center">FELLS LIKE</div>
                         <h4 class="p-2 text-xl font-bold text-center"></h4>
@@ -185,136 +205,137 @@ $user = $userDao->getByUserKey($user_key);
                 </div>
             </div>
 
-            <div id="logged">
-                <!-- Todo Area -->
-                <div class="hover:shadow-xl">
-                    <div id="todoTaskArea" 
-                        class="p-2 h-20 text-xl font-bold text-white list-none hover:overflow-y-auto">
-                    </div>
-
-                    <form name="inputTasks"
-                        class=""
-                    >
-                        <input class="w-full p-2 bg-transparent border-b-2 outline-none placeholder:text-white"
-                            type="text" autofocus placeholder="What would you like to be focused?" />
-                        <input class="" 
-                            type="submit" value="Save" />
-                    </form>
+            <!-- Todo Area -->
+            <div class="mt-10 w-2/4">
+                <div id="todoTaskArea" 
+                    class="grid grid-cols-3 gap-4
+                        text-lg font-bold text-white list-none hover:overflow-y-auto"
+                >
                 </div>
 
-                <!-- Pomodoro config Area -->
-                <div id="pomodoroConfigurationArea" class="absolute inset-y-0 inset-x-0 bg-slate-900/70 z-10 opacity-0 hidden">
-                    <div id="handlePomodoroConfigClose" 
-                        class="absolute right-6 top-6 p-4 border rounded-full 
-                        bg-slate-900/50 text-3xl hover:bg-slate-900/80"
-                    >
-                        x
-                    </div>
-                    <div style="text-shadow: none;"
-                        class="m-auto p-4 mt-20 w-10/12 h-5/6 text-gray-900 rounded"
-                    >
-                        <h2 class="text-white text-center bg-sky-900/90">POMODORO CONFIG</h2>
-                        <div class="flex">
-                            <div class="flex-[3] flex flex-col justify-around bg-sky-400" >
-                                <fieldset id="startBreakBell"
-                                    class="p-2 text-xl"
-                                >
-                                    <legend class="text-2xl mb-4" >Start Break</legend>
-                                    <input value="1" type="checkbox" onclick="checkboxSelected(event, '#startBreakBell input')"/><span class="mr-4"> Song 1</span>
-                                    <input value="2" type="checkbox" onclick="checkboxSelected(event, '#startBreakBell input')"/><span class="mr-4"> Song 2</span>
-                                    <input value="3" type="checkbox" onclick="checkboxSelected(event, '#startBreakBell input')"/><span class="mr-4"> Song 3</span>
-                                    <input value="4" type="checkbox" onclick="checkboxSelected(event, '#startBreakBell input')"/><span class="mr-4"> Song 4</span>
-                                </fieldset>
-                                <fieldset  id="stopBreakBell"
-                                    class="p-2 text-xl"
-                                >
-                                    <legend class="text-2xl mb-4" >Stop Break</legend>
-                                    <input value="1" type="checkbox" onclick="checkboxSelected(event, '#stopBreakBell input')"/><span class="mr-4"> Song 1</span>
-                                    <input value="2" type="checkbox" onclick="checkboxSelected(event, '#stopBreakBell input')"/><span class="mr-4"> Song 2</span>
-                                    <input value="3" type="checkbox" onclick="checkboxSelected(event, '#stopBreakBell input')"/><span class="mr-4"> Song 3</span>
-                                    <input value="4" type="checkbox" onclick="checkboxSelected(event, '#stopBreakBell input')"/><span class="mr-4"> Song 4</span>
-                                </fieldset>
+                <form name="inputTasks" class="flex mt-4">
+                    <input class="w-full p-2 bg-transparent text-xl font-bold border-b-2 outline-none placeholder:text-white"
+                        type="text" autofocus placeholder="What would you like to be focused today?" />
+                    <input class="ml-4 p-2 bg-slate-900/20 text-xl font-bold cursor-pointer hover:text-orange-500/80 ease-in duration-150" 
+                        type="submit" value="Save" />
+                </form>
+            </div>
+
+            <!-- Pomodoro config Area -->
+            <div id="pomodoroConfigurationArea" class="absolute inset-y-0 inset-x-0 bg-slate-900/70 z-10 opacity-0 hidden">
+                <div id="handlePomodoroConfigClose" 
+                    class="absolute right-6 top-6 p-4 border rounded-full 
+                    bg-slate-900/50 text-3xl hover:bg-slate-900/80"
+                >
+                    x
+                </div>
+                <div style="text-shadow: none;"
+                    class="m-auto p-4 mt-20 w-10/12 h-5/6 text-gray-900 rounded"
+                >
+                    <h2 class="text-white text-center bg-sky-900/90">POMODORO CONFIG</h2>
+                    <div class="flex">
+                        <div class="flex-[3] flex flex-col justify-around bg-sky-400" >
+                            <fieldset id="startBreakBell"
+                                class="p-2 text-xl"
+                            >
+                                <legend class="text-2xl mb-4" >Start Break</legend>
+                                <input value="1" type="checkbox" onclick="checkboxSelected(event, '#startBreakBell input')"/><span class="mr-4"> Song 1</span>
+                                <input value="2" type="checkbox" onclick="checkboxSelected(event, '#startBreakBell input')"/><span class="mr-4"> Song 2</span>
+                                <input value="3" type="checkbox" onclick="checkboxSelected(event, '#startBreakBell input')"/><span class="mr-4"> Song 3</span>
+                                <input value="4" type="checkbox" onclick="checkboxSelected(event, '#startBreakBell input')"/><span class="mr-4"> Song 4</span>
+                            </fieldset>
+                            <fieldset  id="stopBreakBell"
+                                class="p-2 text-xl"
+                            >
+                                <legend class="text-2xl mb-4" >Stop Break</legend>
+                                <input value="1" type="checkbox" onclick="checkboxSelected(event, '#stopBreakBell input')"/><span class="mr-4"> Song 1</span>
+                                <input value="2" type="checkbox" onclick="checkboxSelected(event, '#stopBreakBell input')"/><span class="mr-4"> Song 2</span>
+                                <input value="3" type="checkbox" onclick="checkboxSelected(event, '#stopBreakBell input')"/><span class="mr-4"> Song 3</span>
+                                <input value="4" type="checkbox" onclick="checkboxSelected(event, '#stopBreakBell input')"/><span class="mr-4"> Song 4</span>
+                            </fieldset>
+                        </div>
+                        <div class="flex-1 flex flex-col p-4 bg-sky-500">
+                            <h2>Time</h2>
+                            <div class="p-2" >   
+                                <label >Pomodoro Length</label><br/>
+                                <select name="pomodoro" id="setPomodoroLength" class="p-1 border border-gray-900 rounded">
+                                    <option value="5">5</option>
+                                    <option value="10">10</option>
+                                    <option value="15">15</option>
+                                    <option value="20">20</option>
+                                    <option value="25">25</option>
+                                    <option value="30">30</option>
+                                    <option value="35">35</option>
+                                    <option value="40">40</option>
+                                    <option value="45">45</option>
+                                    <option value="50">50</option>
+                                    <option value="55">55</option>
+                                </select>
                             </div>
-                            <div class="flex-1 flex flex-col p-4 bg-sky-500">
-                                <h2>Time</h2>
-                                <div class="p-2" >   
-                                    <label >Pomodoro Length</label><br/>
-                                    <select name="pomodoro" id="setPomodoroLength" class="p-1 border border-gray-900 rounded">
-                                        <option value="5">5</option>
-                                        <option value="10">10</option>
-                                        <option value="15">15</option>
-                                        <option value="20">20</option>
-                                        <option value="25">25</option>
-                                        <option value="30">30</option>
-                                        <option value="35">35</option>
-                                        <option value="40">40</option>
-                                        <option value="45">45</option>
-                                        <option value="50">50</option>
-                                        <option value="55">55</option>
-                                    </select>
-                                </div>
-                                <div class="p-2" >   
-                                    <label>Short Break</label><br/>
-                                    <select name="pomodoro" id="setPomodoroShortBreak" class="p-1 border border-gray-900 rounded">
-                                        <option value="5">5</option>
-                                        <option value="10">10</option>
-                                        <option value="15">15</option>
-                                        <option value="20">20</option>
-                                        <option value="25">25</option>
-                                        <option value="30">30</option>
-                                        <option value="35">35</option>
-                                        <option value="40">40</option>
-                                        <option value="45">45</option>
-                                        <option value="50">50</option>
-                                        <option value="55">55</option>
-                                    </select>
-                                </div>
-                                <div class="p-2" >   
-                                    <label>Long Break</label><br/>
-                                    <select name="pomodoro" id="setPomodoroLongBreak" class="p-1 border border-gray-900 rounded">
-                                        <option value="5">5</option>
-                                        <option value="10">10</option>
-                                        <option value="15">15</option>
-                                        <option value="20">20</option>
-                                        <option value="25">25</option>
-                                        <option value="30">30</option>
-                                        <option value="35">35</option>
-                                        <option value="40">40</option>
-                                        <option value="45">45</option>
-                                        <option value="50">50</option>
-                                        <option value="55">55</option>
-                                    </select>
-                                </div>
-                                <div class="p-2" >   
-                                    <label>Long Break After</label><br/>
-                                    <select name="pomodoro" id="setPomodorolongAfter" class="p-1 border border-gray-900 rounded">
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                        <option value="6">6</option>
-                                        <option value="7">7</option>
-                                        <option value="8">8</option>
-                                    </select>
-                                </div>
-                                <button id="handleSavePomodoroConfig"
-                                    class="p-2 bg-orange-600 text-white rounded 
-                                    hover:bg-orange-500 hover:text-black 
-                                    ease-in durantion-300"
-                                >
-                                    Save
-                                </button>
+                            <div class="p-2" >   
+                                <label>Short Break</label><br/>
+                                <select name="pomodoro" id="setPomodoroShortBreak" class="p-1 border border-gray-900 rounded">
+                                    <option value="5">5</option>
+                                    <option value="10">10</option>
+                                    <option value="15">15</option>
+                                    <option value="20">20</option>
+                                    <option value="25">25</option>
+                                    <option value="30">30</option>
+                                    <option value="35">35</option>
+                                    <option value="40">40</option>
+                                    <option value="45">45</option>
+                                    <option value="50">50</option>
+                                    <option value="55">55</option>
+                                </select>
                             </div>
+                            <div class="p-2" >   
+                                <label>Long Break</label><br/>
+                                <select name="pomodoro" id="setPomodoroLongBreak" class="p-1 border border-gray-900 rounded">
+                                    <option value="5">5</option>
+                                    <option value="10">10</option>
+                                    <option value="15">15</option>
+                                    <option value="20">20</option>
+                                    <option value="25">25</option>
+                                    <option value="30">30</option>
+                                    <option value="35">35</option>
+                                    <option value="40">40</option>
+                                    <option value="45">45</option>
+                                    <option value="50">50</option>
+                                    <option value="55">55</option>
+                                </select>
+                            </div>
+                            <div class="p-2" >   
+                                <label>Long Break After</label><br/>
+                                <select name="pomodoro" id="setPomodorolongAfter" class="p-1 border border-gray-900 rounded">
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                </select>
+                            </div>
+                            <button id="handleSavePomodoroConfig"
+                                class="p-2 bg-orange-600 text-white rounded 
+                                hover:bg-orange-500 hover:text-black 
+                                ease-in durantion-300"
+                            >
+                                Save
+                            </button>
                         </div>
                     </div>
                 </div>
-            </div>  
+            </div>
 
 
-            <div id="unlogged" class="hidden">
-                <form name="userNameSave" method="POST" action="saveUserName.php">
-                    <input name="name" class="text-black" type="text" placeholder="What is your name?"/>
-                    <input type="submit" value="Save" class="p-1 border bg-slate-900/40 rounded hover:bg-slate-900/60 ease-in duration-300" />
+            <div id="unlogged" class="mt-10 w-2/4 hidden">
+                <form class="flex mt-4"
+                name="userNameSave" method="POST" action="saveUserName.php">
+                    <input class="w-full p-2 bg-transparent text-xl font-bold border-b-2 outline-none placeholder:text-white"
+                    name="name" type="text" placeholder="What is your name?"/>
+                    <input class="ml-4 p-2 bg-slate-900/20 text-xl font-bold cursor-pointer hover:text-orange-500/80 ease-in duration-150" 
+                    type="submit" value="Save"  />
                 </form>
             </div>      
         </div>
@@ -322,7 +343,7 @@ $user = $userDao->getByUserKey($user_key);
 
 
     <footer class="fixed bottom-2 inset-x-0 h-24 pt-8
-        text-xl ease-in duration-300 delay-300 hover:pt-0 hover:shadow-xl
+        text-xl ease-in duration-150 hover:pt-0 hover:shadow-xl
         overflow-hidden"
     >
         <p class="container m-auto text-center break-normal"><?=$quote[date('d')]->getContent()?></p>

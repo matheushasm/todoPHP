@@ -118,7 +118,8 @@ function closeConfigArea() {
 }
 
 function setUserName() {
-    c('#todoMainFocus').style.display = 'none';
+    c('#todoTaskArea').style.display = 'none';
+    c("form[name='inputTasks']").style.display = 'none';
     c('#unlogged').style.display = 'block';
 }
 
