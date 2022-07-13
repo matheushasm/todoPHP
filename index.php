@@ -309,7 +309,7 @@ class="font-sans text-lg text-white bg-slate-900 select-none
 
 
     <script type="text/javascript" src="./assets/js/config.js"></script>
-    <script type="text/javascript" src="./assets/js/weatherRequest.js"></script>
+    <script type="text/javascript" src="./assets/js/apiWeatherRequest.js"></script>
     <script type="text/javascript" src="./assets/js/PomodoroObject.js"></script>
     <script type="text/javascript" src="./assets/js/script.js"></script>
 </body>
