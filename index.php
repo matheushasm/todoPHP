@@ -22,9 +22,8 @@ $user = $userDao->getByUserKey($user_key);
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>To Do</title>
-    <link rel="stylesheet" href="assets/css/style.css" />
-    <script src="https://cdn.tailwindcss.com"></script>
 
+    <link rel="stylesheet" href="assets/css/style.css" />
     <link href='https://css.gg/timer.css' rel='stylesheet'>
     <link href='https://css.gg/more.css' rel='stylesheet'>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>  
@@ -34,35 +33,11 @@ $user = $userDao->getByUserKey($user_key);
             background-image: url(<?=$bgImage[date('d')]->getUrl()?>);
             text-shadow: 1px 1px #000;
         }
-
-        #todoTaskArea li {
-            display: flex;
-            justify-content: space-around;
-            padding: 5px;
-            background-color: rgba(71, 70, 71, .3);
-            transition: ease all .3s;
-        }
-        #todoTaskArea li:hover {
-            background-color: rgba(71, 70, 71, .7);
-        }
-
-        #todoTaskArea li button {
-            width: 30px;
-            height: 30px;
-            margin-left: 5px;
-            padding: 2px;
-            background-color: rgba(255, 0, 0, .3);
-            border-radius: 5px;
-            transition: ease all .3s;
-        }
-        #todoTaskArea li button:hover {
-            background-color: rgba(255, 0, 0, .7);
-        }
-
-        #pomodoroConfigFieldsArea {
-            text-shadow: none;
-        }
     </style>
+
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- <script async src="https://cse.google.com/cse.js?cx=e4504d48e03031044"></script> -->
 
 </head>
 <body class="font-sans text-lg text-white bg-slate-900 select-none bg-neutral-900 bg-cover bg-center">
@@ -82,8 +57,7 @@ $user = $userDao->getByUserKey($user_key);
     <header class="fixed inset-x-0 p-4">
         <div class="flex justify-between ">
             <div class="">
-                <input type="text" name="search" />
-                <input type="submit" value="Search" />
+                <!-- <div class="gcse-search"></div> -->
             </div>
 
             <div id="weather" class="flex flex-col items-center justify-center bg-slate-800/5 rounded hover:shadow-xl">
@@ -144,7 +118,7 @@ $user = $userDao->getByUserKey($user_key);
         <div class="w-full p-6 flex flex-col items-center rounded hover:shadow-xl">
             <div class="flex items-center">
                 <div id="timerButtonArea" 
-                    class="mr-16 p-4 cursor-pointer hover:bg-slate-900/20">
+                    class="mr-16 p-4 cursor-pointer hover:bg-slate-900/20 rounded">
                     <i class="gg-timer"></i>
                     <div id="timerConfigArea" class="absolute rounded hover:shadow-xl hidden">
                         <div id="handleClockButton" class="p-2 text-lg hover:bg-orange-400 hover:text-white ease-in duration-300">Clock</div>
@@ -192,7 +166,7 @@ $user = $userDao->getByUserKey($user_key);
                     </div>
                 </div>
 
-                <div id="configButtonArea" class="ml-16 p-4 cursor-pointer hover:bg-slate-900/20">
+                <div id="configButtonArea" class="ml-16 p-6 cursor-pointer hover:bg-slate-900/20 rounded">
                         <i class="gg-more"></i>
                         <div id="userConfigurationArea" class="absolute rounded hover:shadow-xl hidden">
                             <div id="handleSetUserButton" class="p-2 text-lg  hover:bg-orange-400 hover:text-white ease-in duration-300">Set Name</div>
