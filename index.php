@@ -4,15 +4,20 @@ require_once __DIR__ . '/db/dao/ImageDaoMysql.php';
 require_once __DIR__ . '/db/dao/QuoteDaoMysql.php';
 require_once __DIR__ . '/db/dao/UserDaoMysql.php';
 
+$user_key = $_COOKIE['user_key'];
+
 $imageDao = new ImageDaoMysql($pdo);
 $quoteDao = new QuoteDaoMysql($pdo);
 $userDao = new UserDaoMysql($pdo);
 
-$user_key = $_COOKIE['user_key'];
-
 $bgImage = $imageDao->getAll();
 $quote = $quoteDao->getAll();
 $user = $userDao->getByUserKey($user_key);
+
+if(!$user) {
+    header("location: getUserData.php");
+    exit;
+}
 ?>
 
 <!DOCTYPE html>
@@ -23,42 +28,30 @@ $user = $userDao->getByUserKey($user_key);
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>To Do</title>
 
-    <link rel="stylesheet" href="assets/css/style.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
     <link href='https://css.gg/timer.css' rel='stylesheet'>
     <link href='https://css.gg/more.css' rel='stylesheet'>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>  
 
     <style>
         body {
-            background-image: url(<?=$bgImage[date('d')]->getUrl()?>);
+            background-image: url(<?=$bgImage[0]->getUrl()?>);
             text-shadow: 1px 1px #000;
         }
     </style>
-
-
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- <script async src="https://cse.google.com/cse.js?cx=e4504d48e03031044"></script> -->
-
+    <link rel="stylesheet" href="assets/css/style.css" />
 </head>
 <body class="font-sans text-lg text-white bg-slate-900 select-none bg-neutral-900 bg-cover bg-center">
+
     <form name="userDataForm" method="POST" action="saveUserData.php">
-        <input type="hidden" name="name" value="<?=$user->getName() ?: ''?>"/>
-        <input type="hidden" name="location" value="<?=$user->getLocation() ?: ''?>"/>
+        <input type="hidden" name="name" value="<?=$user->getName()?>"/>
+        <input type="hidden" name="location" value="<?=$user->getLocation()?>" />
         <input type="hidden" name="ip" />
     </form>
-    <?php 
-        if(!isset($_COOKIE['user_key'])) {
-            echo '<script type="text/javascript" src="./assets/js/userDataSave.js"></script>';
-            exit;
-        }
-    ?>
-
 
     <header class="fixed inset-x-0 p-4">
         <div class="flex justify-between ">
-            <div class="">
-                <!-- <div class="gcse-search"></div> -->
-            </div>
+            <div class=""></div>
 
             <div id="weather" class="flex flex-col items-center justify-center bg-slate-800/5 rounded hover:shadow-xl">
                 <div class="flex p-2">
@@ -176,7 +169,7 @@ $user = $userDao->getByUserKey($user_key);
             </div>
 
             <!-- Todo Area -->
-            <div class="mt-10 w-2/4">
+            <div id="todoArea" class="mt-10 w-2/4">
                 <div id="todoTaskArea" 
                     class="grid grid-cols-3 gap-4 text-lg font-bold text-white list-none hover:overflow-y-auto"
                 ></div>
@@ -305,17 +298,13 @@ $user = $userDao->getByUserKey($user_key);
         text-xl ease-in duration-150 hover:pt-0 hover:shadow-xl
         overflow-hidden"
     >
-        <p class="container m-auto text-center break-normal"><?=$quote[date('d')]->getContent()?></p>
-        <p class="container m-auto text-center"><small><?=$quote[date('d')]->getAuthor()?></small></p> 
+        <p class="container m-auto text-center break-normal"><?=$quote[0]->getContent()?></p>
+        <p class="container m-auto text-center"><small><?=$quote[0]->getAuthor()?></small></p> 
     </footer>
     <div class="p-2 absolute bottom-2 left-2 cursor-pointer">
         <a href="./pages/loginPage.php" target="_blank">...</a>
     </div>
 
-
-    <script type="text/javascript" src="./assets/js/config.js"></script>
-    <script type="text/javascript" src="./assets/js/apiWeatherRequest.js"></script>
-    <script type="text/javascript" src="./assets/js/PomodoroObject.js"></script>
     <script type="text/javascript" src="./assets/js/script.js"></script>
 </body>
 </html>
