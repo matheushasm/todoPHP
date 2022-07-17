@@ -35,13 +35,16 @@ if(!$user) {
 
     <style>
         body {
+            width: 100%;
+            height: 100vh;
             background-image: url(<?=$bgImage[0]->getUrl()?>);
             text-shadow: 1px 1px #000;
+            overflow: hidden;
         }
     </style>
     <link rel="stylesheet" href="assets/css/style.css" />
 </head>
-<body class="font-sans text-lg text-white bg-slate-900 select-none bg-neutral-900 bg-cover bg-center">
+<body class="font-sans text-lg text-white bg-slate-900 bg-neutral-900 bg-cover bg-center bg-no-repeat select-none">
 
     <form name="userDataForm" method="POST" action="saveUserData.php">
         <input type="hidden" name="name" value="<?=$user->getName()?>"/>
@@ -49,7 +52,7 @@ if(!$user) {
         <input type="hidden" name="ip" />
     </form>
 
-    <header class="fixed inset-x-0 p-4">
+    <header class="fixed inset-x-0 ">
         <div class="flex justify-between ">
             <div class=""></div>
 
@@ -107,11 +110,11 @@ if(!$user) {
     </header>
 
 
-    <main class="h-screen container m-auto flex flex-col justify-center items-center">
-        <div class="w-full p-6 flex flex-col items-center rounded hover:shadow-xl">
+    <main class="h-full container m-auto flex flex-col justify-center items-center">
+        <div class="w-full flex flex-col items-center rounded hover:shadow-xl">
             <div class="flex items-center">
                 <div id="timerButtonArea" 
-                    class="mr-16 p-4 cursor-pointer hover:bg-slate-900/20 rounded">
+                    class="mr-16 p-2 cursor-pointer hover:bg-slate-900/20 rounded">
                     <i class="gg-timer"></i>
                     <div id="timerConfigArea" class="absolute rounded hover:shadow-xl hidden">
                         <div id="handleClockButton" class="p-2 text-lg hover:bg-orange-400 hover:text-white ease-in duration-300">Clock</div>
@@ -121,12 +124,12 @@ if(!$user) {
                 </div>
 
                 <div id="clock">
-                    <h2 class="p-4 text-9xl font-bold"></h2>
+                    <h2 class="text-9xl font-bold"></h2>
                     <h4 class="mt-2 mb-10 text-4xl text-center"><span></span><?=$user->getName()?></h4>
                 </div>
 
                 <div id="pomodoroArea" class="hidden">
-                    <h2 class="p-4 text-9xl font-bold"></h2>
+                    <h2 class="text-9xl font-bold"></h2>
                     <div class="w-full flex justify-center">
                         <button id="handlePomodoroPlay"
                         class="mr-2 p-2 text-2xl font-bold bg-slate-600/50 rounded hover:bg-slate-700/50"
@@ -142,7 +145,7 @@ if(!$user) {
                 </div>
 
                 <div id="timerArea" class="hidden">
-                    <h2 class="p-4 text-8xl font-bold">00:00:00</h2>
+                    <h2 class="text-8xl font-bold">00:00:00</h2>
                     <div 
                     class="w-full flex justify-center">
                         <button id="handleTimerPlay"
@@ -159,7 +162,7 @@ if(!$user) {
                     </div>
                 </div>
 
-                <div id="configButtonArea" class="ml-16 p-6 cursor-pointer hover:bg-slate-900/20 rounded">
+                <div id="configButtonArea" class="ml-16 p-2 cursor-pointer hover:bg-slate-900/20 rounded">
                         <i class="gg-more"></i>
                         <div id="userConfigurationArea" class="absolute rounded hover:shadow-xl hidden">
                             <div id="handleSetUserButton" class="p-2 text-lg  hover:bg-orange-400 hover:text-white ease-in duration-300">Set Name</div>
@@ -169,7 +172,7 @@ if(!$user) {
             </div>
 
             <!-- Todo Area -->
-            <div id="todoArea" class="mt-10 w-2/4">
+            <div id="todoArea" class="mt-4 w-2/4">
                 <div id="todoTaskArea" 
                     class="grid grid-cols-3 gap-4 text-lg font-bold text-white list-none hover:overflow-y-auto"
                 ></div>
@@ -281,7 +284,7 @@ if(!$user) {
             </div>
 
 
-            <div id="unlogged" class="mt-10 w-2/4 hidden">
+            <div id="unlogged" class="mt-4 w-2/4 hidden">
                 <form class="flex mt-4"
                 name="userNameSave" method="POST" action="saveUserName.php">
                     <input class="w-full p-2 bg-transparent text-xl font-bold border-b-2 outline-none placeholder:text-white"
@@ -294,14 +297,14 @@ if(!$user) {
     </main>
 
 
-    <footer class="fixed bottom-2 inset-x-0 h-24 pt-8
+    <footer class="absolute bottom-0 left-0 right-0
         text-xl ease-in duration-150 hover:pt-0 hover:shadow-xl
         overflow-hidden"
     >
-        <p class="container m-auto text-center break-normal"><?=$quote[0]->getContent()?></p>
-        <p class="container m-auto text-center"><small><?=$quote[0]->getAuthor()?></small></p> 
+        <p class="container m-auto text-center break-normal"><?=$quote[1]->getContent()?></p>
+        <p class="container m-auto text-center hidden"><small><?=$quote[1]->getAuthor()?></small></p> 
     </footer>
-    <div class="p-2 absolute bottom-2 left-2 cursor-pointer">
+    <div class="p-2 absolute bottom-4 left-4 cursor-pointer">
         <a href="./pages/loginPage.php" target="_blank">...</a>
     </div>
 

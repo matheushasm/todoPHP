@@ -55,9 +55,9 @@ c('#handlePomodoroButton').addEventListener('click', showPomodoro);
 c('#handleTimerButton').addEventListener('click', showTimer);
 
 c('#timerButtonArea').addEventListener('click', showTimerConfigArea);
-c('#timerConfigArea').addEventListener('mouseleave', showTimerConfigArea);
+c('#timerButtonArea').addEventListener('mouseleave', closeTimerConfigArea);
 c('#configButtonArea').addEventListener('click', showConfigArea);
-c('#userConfigurationArea').addEventListener('mouseleave', showConfigArea);
+c('#configButtonArea').addEventListener('mouseleave', closeConfigArea);
 
 //SetUserName on data base
 c('#handleSetUserButton').addEventListener('click', setUserName);
@@ -127,23 +127,19 @@ function showConfigArea() {
 function closeTimerConfigArea() {
     if(c('#timerConfigArea').style.display == 'block') {
         c('#timerConfigArea').style.display = 'none';
-    } else {
-        c('#timerConfigArea').style.display = 'block';
     }
 }
 function closeConfigArea() {
     if(c('#userConfigurationArea').style.display == 'block') {
         c('#userConfigurationArea').style.display = 'none';
-    } else {
-        c('#userConfigurationArea').style.display = 'block';
     }
 }
-
 function setUserName() {
     c('#todoTaskArea').style.display = 'none';
     c("form[name='inputTasks']").style.display = 'none';
     c('#unlogged').style.display = 'block';
 }
+
 
     // API WEATHER REQUEST
 async function printWeather(cityName) {
@@ -153,7 +149,7 @@ async function printWeather(cityName) {
     c('#weather h2').innerHTML = `${w.main.temp.toFixed()}º C`;
     c('#weather h4').innerHTML = w.name;
 
-    c('#weather').addEventListener('mouseover', printFullWeather);
+    c('#weather').addEventListener('click', printFullWeather);
     c('#fullWeather').addEventListener('mouseleave', removeFullWeather);
 
     c('#fullWeatherLocation').innerHTML = `${w.name}, ${w.sys.country}`;
