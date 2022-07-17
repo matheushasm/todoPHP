@@ -1,19 +1,20 @@
 #todoTaskArea li {
     display: flex;
-    justify-content: space-around;
-    padding: 5px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2px 5px;
     background-color: rgba(71, 70, 71, .3);
+    border-radius: 5px;
+    
     transition: ease all .3s;
 }
 #todoTaskArea li:hover {
-    background-color: rgba(71, 70, 71, .7);
+    background-color: rgba(71, 70, 71, .8);
 }
 
 #todoTaskArea li button {
-    width: 30px;
-    height: 30px;
     margin-left: 5px;
-    padding: 2px;
+    padding: 8px;
     background-color: rgba(255, 0, 0, .3);
     border-radius: 5px;
     transition: ease all .3s;

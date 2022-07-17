@@ -46,9 +46,10 @@ if(!userName) {
     c('#todoArea').style.display = 'none';
 }
 
-
 c("form[name='inputTasks']").addEventListener('submit', saveTodoFocus);
 cs('#todoTaskArea .deleteTask').forEach(item => item.addEventListener('click', deleteThisTask));
+
+c('#hamButtom').addEventListener('click', showMobileMenu);
 
 c('#handleClockButton').addEventListener('click', showClock);
 c('#handlePomodoroButton').addEventListener('click', showPomodoro);
@@ -87,6 +88,18 @@ switch(sessionStorage.location) {
 }
 
 // EVENT FUNCTIOS
+function showMobileMenu() {
+    if(c('#mobileMenu').style.height == 'auto') {
+        c('#mobileMenu').style.height = '0px';
+    } else {
+        c('#mobileMenu').style.height = 'auto';
+    }
+}
+
+
+
+
+
 function showClock() {
     c('main #clock').style.display = 'block';
     c('main #timerArea').style.display = 'none';
