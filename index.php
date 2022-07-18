@@ -323,7 +323,7 @@ if(!$user) {
         <p class="container m-auto text-sm text-center break-normal sm:text-lg xl:text-xl"><?=$quote[7]->getContent()?></p>
         <p id="quoteAuthor" class="container m-auto text-sm text-center hidden sm:text-lg xl:text-xl"><small><?=$quote[4]->getAuthor()?></small></p> 
     </footer>
-    <div class="p-2 absolute bottom-1 left-2 cursor-pointer text-lg font-bold">
+    <div class="p-4 absolute bottom-1 left-2 cursor-pointer text-lg font-bold">
         <a href="./pages/loginPage.php" target="_blank">...</a>
     </div>
 
