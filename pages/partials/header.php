@@ -9,4 +9,4 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="w-full h-screen">
-    <header class="mb-4 p-2fixed top-0 left-0 right-0 bg-cyan-600 text-2xl text-center text-white font-bold">Admin</header>    
+    <header class="p-2fixed top-0 left-0 right-0 bg-cyan-600 text-2xl text-center text-white font-bold">Admin</header>    
