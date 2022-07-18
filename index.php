@@ -75,43 +75,43 @@ if(!$user) {
                     </div>
                 </div>
             </div>
-            <div id="fullWeather" class="bg-slate-900/80 rounded-xl overflow-hidden opacity-0 hidden">
-                <div id="fullWeatherLocation" class="p-2 text-xl font-bold bg-gray-700">Faro, Portugal</div>
+            <div id="fullWeather" class="w-0 bg-slate-900/80 rounded-xl overflow-hidden ease-in-out duration-300 hidden lg:w-auto lg:h-0">
+                <div id="fullWeatherLocation" class="p-1 text-xl font-bold bg-gray-700 hidden lg:block">Faro, Portugal</div>
 
-                <div id="fullWeatherMain" class="p-2 flex justify-between">
-                    <h4 class="text-5xl font-bold">20º C</h4>
+                <div id="fullWeatherMain" class="p-2 flex justify-between hidden lg:flex">
+                    <h4 class="text-4xl font-bold">20º C</h4>
                     <img/>
                 </div>
 
-                <div id="fullWeaderMinMax" class="p-2">
+                <div id="fullWeaderMinMax" class="p-2 hidden lg:block">
                     <h2 class="mb-2 text-2xl text-center">Cloud</h2>
                     <h4 class="text-sm font-bold text-center" >min/max</h4>
                 </div>
 
-                <div class="p-4 grid grid-cols-3 gap-4">
-                    <div id="termal" class="bg-blue-500/50 overflow-hidden rounded-xl">
-                        <div class="p-2 text-sm font-bold bg-gray-700 text-center">FELLS LIKE</div>
-                        <h4 class="p-2 text-xl font-bold text-center"></h4>
+                <div class="flex gap-1 lg:grid lg:grid-cols-3 lg:p-2">
+                    <div id="termal" class="bg-blue-500/50 overflow-hidden rounded">
+                        <div class="p-1 text-sm bg-gray-700 text-center">FELLS LIKE</div>
+                        <h4 class="p-1 text-sm text-center"></h4>
                     </div> 
-                    <div id="visibility" class="bg-blue-500/50 overflow-hidden rounded-xl">
-                        <div class="p-2 text-sm font-bold bg-gray-700 text-center">VISIBILITY</div>
-                        <h4 class="p-2 text-xl font-bold text-center"></h4>
+                    <div id="visibility" class="bg-blue-500/50 overflow-hidden rounded">
+                        <div class="p-1 text-sm bg-gray-700 text-center">VISIBILITY</div>
+                        <h4 class="p-1 text-sm text-center"></h4>
                     </div> 
-                    <div id="humity" class="bg-blue-500/50 overflow-hidden rounded-xl">
-                        <div class="p-2 text-sm font-bold bg-gray-700 text-center">HUMIDITY</div>
-                        <h4 class="p-2 text-xl font-bold text-center"></h4>
+                    <div id="humity" class="bg-blue-500/50 overflow-hidden rounded">
+                        <div class="p-1 text-sm bg-gray-700 text-center">HUMIDITY</div>
+                        <h4 class="p-1 text-sm text-center"></h4>
                     </div> 
-                    <div id="wind" class="bg-blue-500/50 overflow-hidden rounded-xl">
-                        <div class="p-2 text-sm font-bold bg-gray-700 text-center">WIND</div>
-                        <h4 class="p-2 text-xl font-bold text-center"></h4>
+                    <div id="wind" class="bg-blue-500/50 overflow-hidden rounded">
+                        <div class="p-1 text-sm bg-gray-700 text-center">WIND</div>
+                        <h4 class="p-1 text-sm text-center"></h4>
                     </div> 
-                    <div id="sunrise" class="bg-blue-500/50 overflow-hidden rounded-xl">
-                        <div class="p-2 text-sm font-bold bg-gray-700 text-center">SUNRISE</div>
-                        <h4 class="p-2 text-xl font-bold text-center"></h4>
+                    <div id="sunrise" class="bg-blue-500/50 overflow-hidden rounded">
+                        <div class="p-1 text-sm bg-gray-700 text-center">SUNRISE</div>
+                        <h4 class="p-1 text-sm text-center"></h4>
                     </div> 
-                    <div id="sunset" class="bg-blue-500/50 overflow-hidden rounded-xl">
-                        <div class="p-2 text-sm font-bold bg-gray-700 text-center">SUNSET</div>
-                        <h4 class="p-2 text-xl font-bold text-center"></h4>
+                    <div id="sunset" class="bg-blue-500/50 overflow-hidden rounded">
+                        <div class="p-1 text-sm bg-gray-700 text-center">SUNSET</div>
+                        <h4 class="p-1 text-sm text-center"></h4>
                     </div> 
                 </div>
             </div>
@@ -208,34 +208,34 @@ if(!$user) {
             <!-- Pomodoro config Area -->
             <div id="pomodoroConfigurationArea" class="absolute inset-y-0 inset-x-0 bg-slate-900/70 z-10 opacity-0 hidden">
                 <div id="handlePomodoroConfigClose" 
-                    class="absolute right-6 top-6 p-4 border rounded-full 
-                    bg-slate-900/50 text-3xl hover:bg-slate-900/80"
+                    class="absolute right-6 top-8 p-2 text-center border rounded-3xl 
+                    bg-slate-900/50 text-xl hover:bg-slate-900/80"
                 >x</div>
 
-                <div id="pomodoroConfigFieldsArea" class="m-auto p-4 mt-20 w-10/12 h-5/6 text-gray-900 rounded">
+                <div id="pomodoroConfigFieldsArea" class="m-auto p-4 mt-20 w-full h-full text-gray-900">
                     <h2 class="text-white text-center bg-sky-900/90">POMODORO CONFIG</h2>
                     <div class="flex">
-                        <div class="flex-[3] flex flex-col justify-around bg-sky-400" >
-                            <fieldset id="startBreakBell" class="p-2 text-xl">
-                                <legend class="text-2xl mb-4" >Start Break</legend>
+                        <div class="p-4 flex-[3] flex flex-col justify-around bg-sky-400" >
+                            <fieldset id="startBreakBell" class="flex flex-col text-lg  sm:flex-row">
+                                <legend class="text-xl font-bold" >Start Break</legend>
                                 <input value="1" type="checkbox" onclick="checkboxSelected(event, '#startBreakBell input')"/><span class="mr-4"> Song 1</span>
                                 <input value="2" type="checkbox" onclick="checkboxSelected(event, '#startBreakBell input')"/><span class="mr-4"> Song 2</span>
                                 <input value="3" type="checkbox" onclick="checkboxSelected(event, '#startBreakBell input')"/><span class="mr-4"> Song 3</span>
                                 <input value="4" type="checkbox" onclick="checkboxSelected(event, '#startBreakBell input')"/><span class="mr-4"> Song 4</span>
                             </fieldset>
-                            <fieldset  id="stopBreakBell" class="p-2 text-xl">
-                                <legend class="text-2xl mb-4" >Stop Break</legend>
+                            <fieldset  id="stopBreakBell" class="flex flex-col text-lg  sm:flex-row">
+                                <legend class="text-xl font-bold" >Stop Break</legend>
                                 <input value="1" type="checkbox" onclick="checkboxSelected(event, '#stopBreakBell input')"/><span class="mr-4"> Song 1</span>
                                 <input value="2" type="checkbox" onclick="checkboxSelected(event, '#stopBreakBell input')"/><span class="mr-4"> Song 2</span>
                                 <input value="3" type="checkbox" onclick="checkboxSelected(event, '#stopBreakBell input')"/><span class="mr-4"> Song 3</span>
                                 <input value="4" type="checkbox" onclick="checkboxSelected(event, '#stopBreakBell input')"/><span class="mr-4"> Song 4</span>
                             </fieldset>
                         </div>
-                        <div class="flex-1 flex flex-col p-4 bg-sky-500">
+                        <div class="p-4 flex-1 flex flex-col text-md bg-sky-500">
                             <h2>Time</h2>
-                            <div class="p-2" >   
-                                <label >Pomodoro Length</label><br/>
-                                <select name="pomodoro" id="setPomodoroLength" class="p-1 border border-gray-900 rounded">
+                            <div class="p-2">   
+                                <label class="font-bold">Pomodoro Length</label><br/>
+                                <select name="pomodoro" id="setPomodoroLength" class="border border-gray-900 rounded">
                                     <option value="5">5</option>
                                     <option value="10">10</option>
                                     <option value="15">15</option>
@@ -249,9 +249,9 @@ if(!$user) {
                                     <option value="55">55</option>
                                 </select>
                             </div>
-                            <div class="p-2" >   
-                                <label>Short Break</label><br/>
-                                <select name="pomodoro" id="setPomodoroShortBreak" class="p-1 border border-gray-900 rounded">
+                            <div class="p-2">   
+                                <label class="font-bold">Short Break</label><br/>
+                                <select name="pomodoro" id="setPomodoroShortBreak" class="border border-gray-900 rounded">
                                     <option value="5">5</option>
                                     <option value="10">10</option>
                                     <option value="15">15</option>
@@ -265,9 +265,9 @@ if(!$user) {
                                     <option value="55">55</option>
                                 </select>
                             </div>
-                            <div class="p-2" >   
-                                <label>Long Break</label><br/>
-                                <select name="pomodoro" id="setPomodoroLongBreak" class="p-1 border border-gray-900 rounded">
+                            <div class="p-2">   
+                                <label class="font-bold">Long Break</label><br/>
+                                <select name="pomodoro" id="setPomodoroLongBreak" class="border border-gray-900 rounded">
                                     <option value="5">5</option>
                                     <option value="10">10</option>
                                     <option value="15">15</option>
@@ -281,9 +281,9 @@ if(!$user) {
                                     <option value="55">55</option>
                                 </select>
                             </div>
-                            <div class="p-2" >   
-                                <label>Long Break After</label><br/>
-                                <select name="pomodoro" id="setPomodorolongAfter" class="p-1 border border-gray-900 rounded">
+                            <div class="p-2">   
+                                <label class="font-bold">Long Break After</label><br/>
+                                <select name="pomodoro" id="setPomodorolongAfter" class="border border-gray-900 rounded">
                                     <option value="2">2</option>
                                     <option value="3">3</option>
                                     <option value="4">4</option>

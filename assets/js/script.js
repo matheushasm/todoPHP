@@ -101,11 +101,6 @@ function showMobileMenu() {
         c('#mobileMenu').style.height = 'auto';
     }
 }
-
-
-
-
-
 function showClock() {
     c('main #clock').style.display = 'block';
     c('main #timerArea').style.display = 'none';
@@ -169,7 +164,6 @@ function setUserName() {
     c('#mobileMenu').style.height = '0px';
 }
 
-
     // API WEATHER REQUEST
 async function printWeather(cityName) {
     let w = await getWeather(cityName);
@@ -200,13 +194,25 @@ async function printWeather(cityName) {
         return json;
     }
     function printFullWeather() {
+        if(window.innerWidth < 1024 ) {
+            c('#fullWeather').style.display = 'block';
+            c('#fullWeather').style.width = 'auto';
+        } else {
+            c('#fullWeather').style.display = 'block';
+            c('#fullWeather').style.height = 'auto';
+        }
         c('#weather').style.display = 'none';
-        c('#fullWeather').style.display = 'block';
-        c('#fullWeather').style.opacity = '1';
+
+        setTimeout(removeFullWeather, 5000);
     }
     function removeFullWeather() {
-        c('#fullWeather').style.opacity = '0';
-        c('#fullWeather').style.display = 'none';
+        if(window.innerWidth < 1024 ) {
+            c('#fullWeather').style.width = '0px';
+            c('#fullWeather').style.display = 'none';
+        } else {
+            c('#fullWeather').style.height = '0px';
+            c('#fullWeather').style.display = 'none';
+        }
         c('#weather').style.display = 'block';
     }
     function convertTimeStamp(stamp) {
