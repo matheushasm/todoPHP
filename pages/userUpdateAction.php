@@ -7,7 +7,7 @@ $userDao = new UserDaoMysql($pdo);
 $id = filter_input(INPUT_POST, 'id');
 $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING);
 $location = filter_input(INPUT_POST, 'location', FILTER_SANITIZE_STRING);
-$ip = filter_input(INPUT_POST, 'ip', FILTER_SANITIZE_IP);
+$ip = filter_input(INPUT_POST, 'ip', FILTER_SANITIZE_STRING);
 $user_key = filter_input(INPUT_POST, 'user_key', FILTER_SANITIZE_STRING);
 
 if($id) {
