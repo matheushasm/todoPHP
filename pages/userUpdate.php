@@ -3,8 +3,8 @@ require_once '../config.php';
 require_once '../db/dao/userDaoMysql.php';
 
 $userDao = new UserDaoMysql($pdo);
-
 $user = false;
+
 $id = filter_input(INPUT_GET, 'id');
 if($id) {
     $user = $userDao->getById($id);
@@ -14,7 +14,7 @@ if($user === false) {
     exit;
 }
 
-include 'partials/header.php';
+include_once 'partials/header.php';
 ?>
 
 <h1 class="p-2 text-xl font-bold">Edit User</h1>
@@ -22,6 +22,7 @@ include 'partials/header.php';
 <div class="p-4">
     <form method="POST" action="userUpdateAction.php"
     class="max-w-sm p-2 flex flex-col border-2 gap-4">
+
         <label class="w-full flex justify-between font-bold">
             ID:
             <input class="w-2/3 p-1 text-md font-normal text-center border"
@@ -56,4 +57,4 @@ include 'partials/header.php';
         type="submit" value="save"/>
     </form>
 </div>
-<?php include 'partials/footer.php'; ?>
+<?php include_once 'partials/footer.php'; ?>

@@ -24,7 +24,7 @@ if(!isset($_SESSION['admin_key'])) {
 ?>
 <div class="p-4 overflow-hidden">
 
-    <a href="logout.php" class="absolute top-10 right-6 p-2 bg-red-500 rounded">Logout</a>
+    <a href="logout.php" class="absolute top-10 right-6 p-2 text-white bg-red-500 rounded">Logout</a>
 
     <section class="mb-8 hover:overflow-y-auto" >
         <div class="mb-4">
