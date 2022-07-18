@@ -57,4 +57,5 @@ include_once 'partials/header.php';
         type="submit" value="save"/>
     </form>
 </div>
+
 <?php include_once 'partials/footer.php'; ?>

@@ -37,7 +37,7 @@ if(!$user) {
         body {
             width: 100%;
             height: 100vh;
-            background-image: url(<?=$bgImage[2]->getUrl()?>);
+            background-image: url(<?=$bgImage[date('d')]->getUrl()?>);
             text-shadow: 1px 1px #000;
             overflow: hidden;
         }
@@ -320,8 +320,8 @@ if(!$user) {
     <footer class="p-2 absolute bottom-2 left-0 right-0
         text-xl ease-in duration-150 hover:pt-0 hover:shadow-xl overflow-hidden"
     >
-        <p class="container m-auto text-sm text-center break-normal sm:text-lg xl:text-xl"><?=$quote[1]->getContent()?></p>
-        <p id="quoteAuthor" class="container m-auto text-sm text-center hidden sm:text-lg xl:text-xl"><small><?=$quote[1]->getAuthor()?></small></p> 
+        <p class="container m-auto text-sm text-center break-normal sm:text-lg xl:text-xl"><?=$quote[date('d')]->getContent()?></p>
+        <p id="quoteAuthor" class="container m-auto text-sm text-center hidden sm:text-lg xl:text-xl"><small><?=$quote[date('d')]->getAuthor()?></small></p> 
     </footer>
     <div class="p-4 absolute bottom-1 left-2 cursor-pointer text-lg font-bold">
         <a href="./pages/loginPage.php" target="_blank">...</a>
