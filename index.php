@@ -53,8 +53,8 @@ if(!$user) {
         <input type="hidden" name="ip" />
     </form>
 
-    <header class="fixed top-0 left-0 right-0">
-        <div class="flex justify-between ">
+    <header class="fixed top-0 left-0 right-0 ">
+        <div class="flex justify-between">
 
             <div id="hamButtom" class="ml-2 flex items-center justify-center cursor-pointer sm:hidden">
                 <div class="h-10 flex flex-col justify-between p-2 bg-white/60 rounded">
@@ -75,7 +75,7 @@ if(!$user) {
                     </div>
                 </div>
             </div>
-            <div id="fullWeather" class="w-0 bg-slate-900/80 rounded-xl overflow-hidden ease-in-out duration-300 hidden lg:w-auto lg:h-0">
+            <div id="fullWeather" class="w-0 bg-slate-900/80 rounded-xl overflow-hidden hidden lg:w-auto lg:h-0">
                 <div id="fullWeatherLocation" class="p-1 text-xl font-bold bg-gray-700 hidden lg:block">Faro, Portugal</div>
 
                 <div id="fullWeatherMain" class="p-2 flex justify-between hidden lg:flex">
@@ -117,12 +117,12 @@ if(!$user) {
             </div>
         </div>  <!-- MOBILE MENU -->
         <div id="mobileMenu" class="w-full h-0 bg-black/70 overflow-hidden">
-                <ul>
-                    <li id="handleClockMobileButton" class="p-1 text-center">Clock</li>
-                    <li id="handlePomodoroMobileButton" class="p-1 text-center">Pomodoro</li>
-                    <li id="handleTimerMobileButton" class="p-1 text-center">Timer</li>
-                    <li id="handleSetUserMobileButton" class="p-1 text-center">Set Name</li>
-                    <li id="handleSetPomodoroMobileButton" class="p-1 text-center">Set Pomodoro</li>
+                <ul class="p-2">
+                    <li id="handleClockMobileButton" class="p-2 text-center border-b border-white/90">Clock</li>
+                    <li id="handlePomodoroMobileButton" class="p-2 text-center border-b border-white/90">Pomodoro</li>
+                    <li id="handleTimerMobileButton" class="p-2 text-center border-b border-white/90">Timer</li>
+                    <li id="handleSetUserMobileButton" class="p-2 text-center border-b border-white/90">Set Name</li>
+                    <li id="handleSetPomodoroMobileButton" class="p-2 text-center border-b border-white/90">Set Pomodoro</li>
                 </ul>
             </div>
     </header>
@@ -148,7 +148,7 @@ if(!$user) {
                 </div>
 
                 <div id="pomodoroArea" class="hidden">
-                    <h2 class="text-9xl font-bold"></h2>
+                    <h2 class="text-7xl font-bold text-center sm:text-8xl lg:text-9xl"></h2>
                     <div class="w-full flex justify-center">
                         <button id="handlePomodoroPlay"
                         class="mr-2 p-2 text-2xl font-bold bg-slate-600/50 rounded hover:bg-slate-700/50"
@@ -164,7 +164,7 @@ if(!$user) {
                 </div>
 
                 <div id="timerArea" class="hidden">
-                    <h2 class="text-8xl font-bold">00:00:00</h2>
+                    <h2 class="text-6xl font-bold text-center sm:text-8xl lg:text-9xl">00:00:00</h2>
                     <div 
                     class="w-full flex justify-center">
                         <button id="handleTimerPlay"
@@ -318,13 +318,12 @@ if(!$user) {
 
 
     <footer class="p-2 absolute bottom-2 left-0 right-0
-        text-xl ease-in duration-150 hover:pt-0 hover:shadow-xl
-        overflow-hidden"
+        text-xl ease-in duration-150 hover:pt-0 hover:shadow-xl overflow-hidden"
     >
         <p class="container m-auto text-sm text-center break-normal sm:text-lg xl:text-xl"><?=$quote[7]->getContent()?></p>
-        <p class="container m-auto text-sm text-center sm:text-lg xl:text-xl"><small><?=$quote[4]->getAuthor()?></small></p> 
+        <p id="quoteAuthor" class="container m-auto text-sm text-center hidden sm:text-lg xl:text-xl"><small><?=$quote[4]->getAuthor()?></small></p> 
     </footer>
-    <div class="p-2 absolute bottom-1 left-2 cursor-pointer">
+    <div class="p-2 absolute bottom-1 left-2 cursor-pointer text-lg font-bold">
         <a href="./pages/loginPage.php" target="_blank">...</a>
     </div>
 
