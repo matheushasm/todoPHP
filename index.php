@@ -118,11 +118,11 @@ if(!$user) {
         </div>  <!-- MOBILE MENU -->
         <div id="mobileMenu" class="w-full h-0 bg-black/70 overflow-hidden">
                 <ul>
-                    <li class="p-1 text-center">Clock</li>
-                    <li class="p-1 text-center">Pomodoro</li>
-                    <li class="p-1 text-center">Timer</li>
-                    <li class="p-1 text-center">Set Name</li>
-                    <li class="p-1 text-center">Set Pomodoro</li>
+                    <li id="handleClockMobileButton" class="p-1 text-center">Clock</li>
+                    <li id="handlePomodoroMobileButton" class="p-1 text-center">Pomodoro</li>
+                    <li id="handleTimerMobileButton" class="p-1 text-center">Timer</li>
+                    <li id="handleSetUserMobileButton" class="p-1 text-center">Set Name</li>
+                    <li id="handleSetPomodoroMobileButton" class="p-1 text-center">Set Pomodoro</li>
                 </ul>
             </div>
     </header>
@@ -193,7 +193,7 @@ if(!$user) {
             <!-- Todo Area -->
             <div id="todoArea" class="mt-4 w-3/4">
                 <div id="todoTaskArea" 
-                    class="grid grid-cols-1 gap-4 text-sm font-bold text-white list-none hover:overflow-y-auto md:grid-cols-2 xl:grid-cols-3"
+                    class="grid grid-cols-1 gap-4 text-sm font-bold text-white list-none overflow-y-auto md:grid-cols-2 xl:grid-cols-3"
                 >
                 </div>
 
@@ -304,12 +304,12 @@ if(!$user) {
             </div>
 
 
-            <div id="unlogged" class="mt-4 w-2/4 hidden">
-                <form class="flex mt-4"
+            <div id="unlogged" class="w-full hidden">
+                <form class="flex m-auto mt-4 w-3/4"
                 name="userNameSave" method="POST" action="saveUserName.php">
-                    <input class="w-full p-2 bg-transparent text-xl font-bold border-b-2 border-white outline-none placeholder:text-white"
+                    <input class="w-full p-2 bg-transparent text-xl font-bold text-center border-b-2 border-white outline-none placeholder:text-white"
                         name="name" type="text" autofocus placeholder="What is your name?"/>
-                    <input class="ml-4 p-2 bg-slate-900/20 text-xl font-bold cursor-pointer hover:text-orange-500/80 ease-in duration-150" 
+                    <input class="ml-4 p-1 bg-slate-900/20 text-xl font-bold cursor-pointer hover:text-orange-500/80 ease-in duration-150 rounded" 
                         type="submit" value="Save"  />
                 </form>
             </div>      

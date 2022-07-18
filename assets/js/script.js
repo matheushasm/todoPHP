@@ -51,9 +51,15 @@ cs('#todoTaskArea .deleteTask').forEach(item => item.addEventListener('click', d
 
 c('#hamButtom').addEventListener('click', showMobileMenu);
 
-c('#handleClockButton').addEventListener('click', showClock);
+c('#handleClockButton').addEventListener('click', showClock);   // DESKTOP MENU
 c('#handlePomodoroButton').addEventListener('click', showPomodoro);
 c('#handleTimerButton').addEventListener('click', showTimer);
+
+c('#handleClockMobileButton').addEventListener('click', showClock);   //  MOBILE MENU BUTTONS
+c('#handlePomodoroMobileButton').addEventListener('click', showPomodoro);
+c('#handleTimerMobileButton').addEventListener('click', showTimer);
+c('#handleSetUserMobileButton').addEventListener('click', setUserName);
+c('#handleSetPomodoroMobileButton').addEventListener('click', openPomodoroConfigArea);
 
 c('#timerButtonArea').addEventListener('click', showTimerConfigArea);
 c('#timerButtonArea').addEventListener('mouseleave', closeTimerConfigArea);
@@ -61,9 +67,9 @@ c('#configButtonArea').addEventListener('click', showConfigArea);
 c('#configButtonArea').addEventListener('mouseleave', closeConfigArea);
 
 //SetUserName on data base
-c('#handleSetUserButton').addEventListener('click', setUserName);
+c('#handleSetUserButton').addEventListener('click', setUserName);   //  SET USERNAME AREA
 
-c('#handleSetPomodoroButton').addEventListener('click', openPomodoroConfigArea);
+c('#handleSetPomodoroButton').addEventListener('click', openPomodoroConfigArea); 
 c('#handlePomodoroConfigClose').addEventListener('click', closePomodoroConfigArea);
 c('#handleSavePomodoroConfig').addEventListener('click', handleSavePomodoroConfig);
 
@@ -104,14 +110,20 @@ function showClock() {
     c('main #clock').style.display = 'block';
     c('main #timerArea').style.display = 'none';
     c('main #pomodoroArea').style.display = 'none';
+
     sessionStorage.location = 'clock';
+
+    c('#mobileMenu').style.height = '0px';
 }
 function showPomodoro() {
     c('main #clock').style.display = 'none';
     c('main #timerArea').style.display = 'none';
     c('main #pomodoroArea').style.display = 'block';
     c('main #pomodoroArea h2').innerHTML = `${pomodoro.time}:00`;
+
     sessionStorage.location = 'pomodoro';
+
+    c('#mobileMenu').style.height = '0px';
 }
 function showTimer() {
     if(sessionStorage.countTimer) {
@@ -121,7 +133,10 @@ function showTimer() {
     c('main #timerArea').style.display = 'block';
     c('main #clock').style.display = 'none';
     c('main #pomodoroArea').style.display = 'none';
+
     sessionStorage.location = 'timer';
+
+    c('#mobileMenu').style.height = '0px';
 }
 function showTimerConfigArea() {
     if(c('#timerConfigArea').style.display == 'block') {
@@ -151,6 +166,7 @@ function setUserName() {
     c('#todoTaskArea').style.display = 'none';
     c("form[name='inputTasks']").style.display = 'none';
     c('#unlogged').style.display = 'block';
+    c('#mobileMenu').style.height = '0px';
 }
 
 
@@ -279,6 +295,7 @@ function openPomodoroConfigArea() {
 function closePomodoroConfigArea() {
     c('#pomodoroConfigurationArea').style.opacity = '0';
     c('#pomodoroConfigurationArea').style.display = 'none';
+    c('#mobileMenu').style.height = '0px';
 }
 function handleSavePomodoroConfig() {
     cs('#startBreakBell input').forEach(item => handleSaveCheckedInputs(item, 'stopBell'));
